@@ -1,5 +1,5 @@
 # tmge
-INF 122 Final Project: Tile Matching Game Environment TMGE)
+INF 122 Final Project: Tile Matching Game Environment (TMGE)
 
 ### GROUP 5 Names (and GitHub names):
 - Jem Eduria (jemeduria)
