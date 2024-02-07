@@ -1,6 +1,13 @@
 # tmge
 INF 122 Final Project: Tile Matching Game Environment TMGE)
 
+### GROUP 5 Names (and GitHub names):
+- Jem Eduria (jemeduria)
+- Aiden On (Mosukai)
+- Nathan Serrano (naleono)
+- Kalman Wong (kalmanwong)
+- Doyeon Yun (govlehdus)
+
 ### Deliverables:
 - TMGE
 - at least 2 games built-in
