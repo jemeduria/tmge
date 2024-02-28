@@ -45,14 +45,21 @@ public class GameEngine {
         System.out.println("3.     QUIT PROGRAM");
         int chosenGame = parseGameInput(4);
 
-        switch (chosenGame) {
-            case 1 -> this.game = new ConnectFour();
-            case 2 -> this.game = new Memory();
-            case 3 -> // return null;
-            default -> quitProgram();
-        }
-
-//        runGame()
+        return switch (chosenGame) {
+            case 1 -> {
+                this.game = new ConnectFour();
+                yield this.game;
+            }
+            case 2 -> {
+                this.game = new ConnectFour();
+                yield this.game;
+            }
+            case 3 -> null;
+            default -> {
+                quitProgram();
+                yield null; // this should never return if quitProgram is correct()
+            }
+        };
     }
 
     public void runGame() {
