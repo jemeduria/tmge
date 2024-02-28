@@ -1,2 +1,2 @@
-public class Memory {
+public class Memory extends Game {
 }

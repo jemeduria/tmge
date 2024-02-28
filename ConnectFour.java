@@ -1,2 +1,2 @@
-public class ConnectFour {
+public class ConnectFour extends Game {
 }
