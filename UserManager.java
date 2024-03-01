@@ -19,31 +19,39 @@ public class UserManager {
         this.currentUser = username;
     }
 
+    public List<String> getUsers() {
+        return this.users;
+    }
 
-    public void login() {
-        String username = "user choose";
+
+    public void login(Scanner scanner) {
+        String username = this.getUserInput(scanner, "Enter a username: ");
+        if (!this.getUsers().contains(username)) {
+            this.getUsers().add(username);
+        }
         this.setCurrentUser(username);
     }
 
     public void logout() {
-        this.currentUser = null;
+        this.setCurrentUser(null);
     }
 
-    public void createAccount() {
-        ;
+    public String getUserInput(Scanner scanner, String prompt) {
+        System.out.print(">> " + prompt);
+        return scanner.nextLine();
     }
 
     public static void main(String[] args) {
         UserManager tmge = new UserManager(); // change later: singleton
         Scanner scanner = new Scanner(System.in); // could change this to be created within constructor of tmge
 
-        // LOOP: login/createAccount, chooseGame/runGame, logout/quit
+        // LOOP: login, chooseGame/runGame, logout/quit
         while (true) {
-
-            // CODE THIS: login/createAccount
+            // login (also creates an account if not already made)
+            tmge.login(scanner);
 
             // double check that user is logged in, otherwise retry login()
-            if (tmge.currentUser != null) {
+            if (tmge.getCurrentUser() != null) {
                 boolean isLoggedIn = true;
 
                 // new GameEngine with every login
