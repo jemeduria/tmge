@@ -1,10 +1,10 @@
+// GameEngine.java
 import java.util.Scanner;
 
 public class GameEngine {
     private Scanner scanner;
     private String user;
     private Game game;
-
 
     public GameEngine(String user, Scanner scanner) {
         this.user = user;
@@ -13,8 +13,7 @@ public class GameEngine {
 
     private String getUserInput(String prompt) {
         System.out.print(">> " + prompt);
-        String userInput = scanner.nextLine();
-        return userInput;
+        return scanner.nextLine();
     }
 
     private int parseGameInput(int maxChoices) {
@@ -45,21 +44,21 @@ public class GameEngine {
         System.out.println("3.     QUIT PROGRAM");
         int chosenGame = parseGameInput(4);
 
-        return switch (chosenGame) {
-            case 1 -> {
+        switch (chosenGame) {
+            case 1:
                 this.game = new ConnectFour();
-                yield this.game;
-            }
-            case 2 -> {
-                this.game = new ConnectFour();
-                yield this.game;
-            }
-            case 3 -> null;
-            default -> {
+                break;
+            case 2:
+                this.game = new Memory();
+                break;
+            case 3:
+                return null;
+            default:
                 quitProgram();
-                yield null; // this should never return if quitProgram is correct()
-            }
-        };
+                return null;
+        }
+
+        return this.game;
     }
 
     public void runGame() {
@@ -71,4 +70,5 @@ public class GameEngine {
         this.scanner.close();
         System.exit(0);
     }
+
 }
