@@ -38,15 +38,21 @@ public class ConnectFourBoard extends Board {
     }
 
     public void createBoardGame(List<Tile> tiles) {
-        for(int i=0; i < this.getRows(); i++) {
-            List gameTiles = new ArrayList<>();
+        // create list of tiles per row
+        List<Tile> rowTiles = new ArrayList<>();
 
-            // add Tiles within the rows
-            for (int j=0; j < this.getColumns(); j++) {
-                gameTiles.add();
+        for (Tile tile: tiles) {
+            // add a tile
+            rowTiles.add(tile);
+
+            // if the row is maxed out to column size
+            if (rowTiles.size() == this.getColumns()) {
+                // add row of tiles to gameBoard
+                super.getGameBoard().add(rowTiles);
+                // empty list for new row
+                rowTiles = new ArrayList<>();
             }
-            // add a new ArrayList for each row
-            super.getGameBoard().add(new ArrayList<>());
         }
     }
+
 }
