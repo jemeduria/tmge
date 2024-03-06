@@ -6,7 +6,7 @@ public class DiagonalMatch implements Matchable {
         ;
     }
 
-    public boolean match(List<Tile> tiles) {
+    public boolean match(List<DisappearingTile> tiles) {
         return true;
     }
 }

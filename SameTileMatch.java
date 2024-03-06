@@ -6,23 +6,24 @@ public class SameTileMatch implements Matchable {
         ;
     }
 
-    public boolean match(List<Tile> tiles) {
-        // ISSUE: tile has no display only the Tile's subclasses do
-        // SOLUTION: give Tile a display that is type String...
-        //           - NumberTile would have to convert their int to String
-        //           - ConnectFourTile is good
-        // QUESTION: is this a smart way to implement this? (in terms of having a good TMGE)
+    public boolean match(List<DisappearingTile> tiles) {
+        String toBeMatched = null;
+        for (DisappearingTile tile: tiles) {
+            if (toBeMatched == null) {
+                // get something to match
+                 toBeMatched = tile.getDisplay();
+                 if (toBeMatched == null) {
+                     return false;
+                 }
+            }
 
-//        String toBeMatched = null
-//        for (Tile tile: tiles) {
-//            if (toBeMatched == null) {
-//                 toBeMatched = tile.display();
-//            }
-//            if (!tile.display().equals(toBeMatched)) {
-//                return false;
-//            }
-//        }
+            // check match for all tiles
+            if (!tile.getDisplay().equals(toBeMatched)) {
+                return false;
+            }
+        }
 
+        // all matched!
         return true;
     }
 }

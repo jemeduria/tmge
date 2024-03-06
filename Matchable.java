@@ -1,4 +1,4 @@
 import java.util.List;
 public interface Matchable {
-    public boolean match(List<Tile> tiles);
+    public boolean match(List<DisappearingTile> tiles);
 }

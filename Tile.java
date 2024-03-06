@@ -2,6 +2,8 @@ public abstract class Tile {
     private int rows;
     private int columns;
 
+    private String display = null;
+
     public Tile() {
         ;
     }
@@ -22,6 +24,12 @@ public abstract class Tile {
         this.columns = column;
     }
 
-//    public abstract String getDisplay();
+    public String getDisplay() {
+        return this.display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
 
 }

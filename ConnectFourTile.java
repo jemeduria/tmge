@@ -3,22 +3,21 @@ import java.util.List;
 
 public class ConnectFourTile extends DisappearingTile {
 
-    private String display = null;
+    private final List<String> displayOptions = new ArrayList<String>();
 
     public ConnectFourTile() {
         super();
+        this.setDisplayOptions();
     }
 
-    public String getDisplay() {
-        return display;
+    public void setDisplayOptions() {
+        this.displayOptions.add("X");
+        this.displayOptions.add("0");
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
-    }
 
     public String printDisplay() {
-        if (this.getDisplay() == null) {
+        if (super.getDisplay() == null) {
             return " ";
         } else {
             return this.getDisplay();
@@ -26,6 +25,11 @@ public class ConnectFourTile extends DisappearingTile {
     }
 
     public void disappear() {
-        this.setDisplay(null);
+        super.setDisplay(null);
     }
+
+    public void addTileDisplay(String display) {
+        super.setDisplay(display);
+    }
+
 }
