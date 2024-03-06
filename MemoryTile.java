@@ -10,19 +10,10 @@ public class MemoryTile extends DisappearingTile {
     }
 
     public void setDisplayOptions() {
-        this.displayOptions.add(0);
-        this.displayOptions.add(1);
-        this.displayOptions.add(2);
-        this.displayOptions.add(3);
-        this.displayOptions.add(4);
-        this.displayOptions.add(5);
-        this.displayOptions.add(6);
-        this.displayOptions.add(7);
-        this.displayOptions.add(8);
-        this.displayOptions.add(9);
-        // probably a better way to do this
+        for (int i=0; i<=9; i++) {
+            this.displayOptions.add(i);
+        }
     }
-
 
     public String printDisplay() {
         if (super.getDisplay() == null) {
