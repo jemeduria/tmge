@@ -6,9 +6,9 @@ public class DiagonalMatch implements Matchable {
         ;
     }
 
-    public boolean match() {
+    public List<Tile> match(List<List<Tile>> gameBoard) {
 
-        return true;
+        return null;
     }
 
 

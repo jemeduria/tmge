@@ -6,25 +6,46 @@ public class SameTileMatch implements Matchable {
         ;
     }
 
-    public boolean match() {
+    public List<Tile> match(List<List<Tile>> gameBoard) {
         String toBeMatched = null;
-        for (Tile tile: tiles) {
-            if (toBeMatched == null) {
-                // get something to match
-                 toBeMatched = tile.getDisplay();
+        for (List<Tile> innerList: gameBoard) {
+            for (Tile tile: innerList) {
+                String display = tile.getDisplay();
 
-                 if (toBeMatched == null) {
-                     return false;
-                 }
-            }
+                // initialize toBeMatched
+                if (toBeMatched == null) {
+                    if (!(display == null)) {
+                        toBeMatched = tile.getDisplay();
+                    }
+                }
 
-            // check match for all tiles
-            if (!tile.getDisplay().equals(toBeMatched)) {
-                return false;
+                // find tile with a display that matches toBeMatched
+                if ((!(display == null)) && (!(t))) {
+
+                }
+
             }
         }
+            if (toBeMatched == null) {
 
-        // all matched!
-        return true;
+//        String toBeMatched = null;
+//        for (Tile tile: tiles) {
+//            if (toBeMatched == null) {
+//                // get something to match
+//                 toBeMatched = tile.getDisplay();
+//
+//                 if (toBeMatched == null) {
+//                     return false;
+//                 }
+//            }
+//
+//            // check match for all tiles
+//            if (!tile.getDisplay().equals(toBeMatched)) {
+//                return false;
+//            }
+//        }
+//
+//        // all matched!
+//        return true;
     }
 }

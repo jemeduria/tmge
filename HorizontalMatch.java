@@ -5,7 +5,8 @@ public class HorizontalMatch implements Matchable {
         ;
     }
 
-    public boolean match() {
-        return true;
+    public List<Tile> match(List<List<Tile>> gameBoard) {
+
+        return null;
     }
 }

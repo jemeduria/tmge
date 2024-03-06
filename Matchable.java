@@ -1,4 +1,4 @@
 import java.util.List;
 public interface Matchable {
-    public boolean match();
+    public List<Tile> match(List<List<Tile>> gameBoard);
 }
