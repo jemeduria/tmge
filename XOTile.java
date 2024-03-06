@@ -1,19 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemoryTile extends DisappearingTile {
-    private final List<Integer> displayOptions = new ArrayList<Integer>();
+public class XOTile extends DisappearingTile {
 
-    public MemoryTile() {
+    private final List<String> displayOptions = new ArrayList<String>();
+
+    public XOTile() {
         super();
         this.setDisplayOptions();
     }
 
     public void setDisplayOptions() {
-        for (int i=0; i<=9; i++) {
-            this.displayOptions.add(i);
-        }
+        this.displayOptions.add("X");
+        this.displayOptions.add("0");
     }
+
 
     public String printDisplay() {
         if (super.getDisplay() == null) {

@@ -1,20 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectFourTile extends DisappearingTile {
+public class NumberTile extends DisappearingTile {
+    private final List<Integer> displayOptions = new ArrayList<Integer>();
 
-    private final List<String> displayOptions = new ArrayList<String>();
-
-    public ConnectFourTile() {
+    public NumberTile(List<Integer> tileOptions) {
         super();
-        this.setDisplayOptions();
+        this.setDisplayOptions(tileOptions);
     }
 
-    public void setDisplayOptions() {
-        this.displayOptions.add("X");
-        this.displayOptions.add("0");
+    public void setDisplayOptions(List<Integer> tileOptions) {
+        this.displayOptions.addAll(tileOptions);
     }
-
 
     public String printDisplay() {
         if (super.getDisplay() == null) {

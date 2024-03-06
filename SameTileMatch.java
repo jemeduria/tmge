@@ -6,9 +6,9 @@ public class SameTileMatch implements Matchable {
         ;
     }
 
-    public boolean match(List<DisappearingTile> tiles) {
+    public boolean match(List<Tile> tiles) {
         String toBeMatched = null;
-        for (DisappearingTile tile: tiles) {
+        for (Tile tile: tiles) {
             if (toBeMatched == null) {
                 // get something to match
                  toBeMatched = tile.getDisplay();
