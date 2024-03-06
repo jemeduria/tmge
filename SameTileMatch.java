@@ -13,7 +13,7 @@ public class SameTileMatch implements Matchable {
             for (Tile tile : innerList) {
                 // testing display only
                 String display = tile.getDisplay();
-                
+
                 // check non-null (via Tile display) and "removed" Memory Tile
                 if (!(display == null) && !(display.equals("X"))) {
                     // initialize toBeMatched

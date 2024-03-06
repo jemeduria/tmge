@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class XOTile extends DisappearingTile {
+public class ConnectFourTile extends DisappearingTile {
 
     private final List<String> displayOptions = new ArrayList<String>();
 
-    public XOTile() {
+    public ConnectFourTile() {
         super();
         this.setDisplayOptions();
     }
