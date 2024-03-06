@@ -10,6 +10,8 @@ public abstract class Board {
 		this.matches = new ArrayList<>();
 	}
 
+	public abstract void addMatches();
+
 	public abstract boolean isValidMove(String move);
 
 	public abstract void executeMove(List<Tile> tiles);

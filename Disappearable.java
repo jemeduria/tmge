@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface Disappearable {
-    public void disappear(Board, List<Tile>);
+    public void disappear(List<DisappearingTile> tiles);
 }

@@ -5,7 +5,7 @@ public class VerticalMatch implements Matchable {
         ;
     }
 
-    public boolean match(Board gameBoard, List<Tile> tiles) {
+    public boolean match(List<Tile> tiles) {
         return true;
     }
 }

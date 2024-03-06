@@ -1,25 +1,25 @@
 public class Tile {
-    int row;
-    int column;
+    private int rows;
+    private int columns;
 
     public Tile() {
-//        this.row = ...
-//        this.column - ...
+        ;
     }
 
-    public int getRow() {
-        return this.row;
+    public int getRows() {
+        return this.rows;
     }
 
-    public int getColumn() {
-        return this.column;
+    public int getColumns() {
+        return this.columns;
     }
 
-    public void setRow(int a) {
-        this.row = a;
+    public void setRows(int row) {
+        this.rows = row;
     }
 
-    public void setColumn(int b) {
-        this.column = b;
+    public void setColumns(int column) {
+        this.columns = column;
     }
+
 }

@@ -1,8 +1,10 @@
-public abstract class DisappearingTile extends Tile implements Disappearable, Matchable{
+public abstract class DisappearingTile extends Tile {
 
-    public disappear() {
 
+    public DisappearingTile() {
+        super();
     }
 
-    public boolean abstract match();
+    public abstract void disappear();
+
 }

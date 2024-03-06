@@ -11,7 +11,7 @@ public class ConnectFourBoard extends Board {
         this.addMatches();
     }
 
-    private void addMatches() {
+    public void addMatches() {
         super.getMatches().add(new VerticalMatch());
         super.getMatches().add(new HorizontalMatch());
         super.getMatches().add(new DiagonalMatch());
