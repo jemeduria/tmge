@@ -1,4 +1,4 @@
-public class Tile {
+public abstract class Tile {
     private int rows;
     private int columns;
 
@@ -21,5 +21,7 @@ public class Tile {
     public void setColumns(int column) {
         this.columns = column;
     }
+
+//    public abstract String getDisplay();
 
 }
