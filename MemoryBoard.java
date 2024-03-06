@@ -6,12 +6,12 @@ public class MemoryBoard extends Board {
     private final int rows = 5;
     private final int columns = 4;
 
-    private final List<Integer> tileOptions;
+    private final List<Integer> numOptions;
 
-    public MemoryBoard(List<Integer> tileOptions) {
+    public MemoryBoard(List<Integer> numOptions) {
         super();
         this.addMatches();
-        this.tileOptions = tileOptions;
+        this.numOptions = numOptions;
     }
 
     public void addMatches() {

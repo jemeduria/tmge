@@ -4,18 +4,19 @@ import java.util.Scanner;
 
 public abstract class Game implements Endable {
 
-    private final Board gameBoard;
+    private Board gameBoard;
     private final List<Player> players = new ArrayList<>();
 
     private Tile chosenTile = null;
 
-    public Game() {
-        // PROBLEM!!!
-        this.gameBoard = new Board();
-    }
+    public Game() {}
 
     public Board getGameBoard() {
         return gameBoard;
+    }
+
+    public void setGameBoard(Board gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     public List<Player> getPlayers() {
@@ -31,7 +32,7 @@ public abstract class Game implements Endable {
     }
 
     public void end() {
-        ;
+        // do we need this? might change to just isGameOver??
     }
 
     public String getMove(Scanner scanner) {

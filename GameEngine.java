@@ -46,23 +46,23 @@ public class GameEngine {
 
         switch (chosenGame) {
             case 1:
-                this.game = new ConnectFour();
+                setGame(new ConnectFour());
                 break;
             case 2:
-                this.game = new Memory();
+                setGame(new Memory());
                 break;
             case 3:
                 return null;
             default:
                 quitProgram();
-                return null;
+                return null; // if correct, should never run
         }
 
-        return this.game;
+        return getGame();
     }
 
     public void runGame() {
-        ;
+        getGame().gameLoop();
     }
 
     public void quitProgram() {
@@ -71,4 +71,27 @@ public class GameEngine {
         System.exit(0);
     }
 
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }
