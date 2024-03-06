@@ -6,12 +6,13 @@ public class SameTileMatch implements Matchable {
         ;
     }
 
-    public boolean match(List<Tile> tiles) {
+    public boolean match() {
         String toBeMatched = null;
         for (Tile tile: tiles) {
             if (toBeMatched == null) {
                 // get something to match
                  toBeMatched = tile.getDisplay();
+
                  if (toBeMatched == null) {
                      return false;
                  }
