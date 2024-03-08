@@ -6,7 +6,7 @@ public class Player {
     public Player(int ID, String display) {
         this.ID = ID;
         this.score = 0;
-        this.display = display
+        this.display = display;
     }
 
     public void addPoint() {
