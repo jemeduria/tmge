@@ -66,10 +66,8 @@ public class ConnectFour extends Game {
     }
 
     private void switchPlayer() {
-        int amountOfPlayers = this.getPlayers().size();
-        int currentPlayer = this.getPlayerTurn().getID();
-        currentPlayer += 1;
-        if (currentPlayer > amountOfPlayers) {
+        int currentPlayer = this.getPlayerTurn().getID() + 1;
+        if (currentPlayer > this.getPlayers().size()) {
             currentPlayer = 1;
         }
 
