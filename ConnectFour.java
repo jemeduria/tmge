@@ -56,7 +56,7 @@ public class ConnectFour extends Game {
                 int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
 
                 // check if column is free (there is at least one available space at the top in that column)
-                if (board.getGameBoard().get(0).get(move-1).getDisplay() == null) {
+                if (board.getGameBoard().getFirst().get(move-1).getDisplay() == null) {
                     return String.valueOf(move);
                 } else {
                     System.out.println("ERROR: Column is full. Choose a different column.");
