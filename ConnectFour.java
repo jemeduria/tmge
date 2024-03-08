@@ -50,9 +50,10 @@ public class ConnectFour extends Game {
             int maxColumns = board.getColumns();
             int minColumns = 1;
 
+            // ********** LATER: move checking whether column is free to gameBoard.isValidMove()
             while (true) {
                 // change user input into int
-                int move = super.parseNumber(scanner, "Player " + this.playerTurn.getID() + ", enter a column: ", minColumns, maxColumns);
+                int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
 
                 // check if column is free (there is at least one available space at the top in that column)
                 if (board.getGameBoard().get(0).get(move-1).getDisplay() == null) {
@@ -78,22 +79,33 @@ public class ConnectFour extends Game {
         }
     }
 
-    public void gameLoop() {
+    public void gameLoop(Scanner scanner) {
         System.out.println("Please determine who will play Player 1 and Player 2.");
 
         boolean gameRunning = true;
         while (gameRunning) {
             this.switchPlayer();
-
-            gameRunning = false;
+            this.takeTurn(scanner);
+            gameRunning = !this.isGameOver();
         }
     }
 
     public boolean isGameOver() {
+        // gameBoard.isFull();
+        // checkPlayerScores();
         return true;
     }
 
-    public void takeTurn() {}
+    public void takeTurn(Scanner scanner) {
+        System.out.println("    Player "
+                + this.getPlayerTurn().getID()
+                + ", place down a "
+                + this.getPlayerTurn().getDisplay());
+        this.getMove(scanner);
+        // super.getGameBoard().isValidMove()
+        // this.checkMatch()
+
+    }
 
     public void chooseTile() {}
 

@@ -13,7 +13,7 @@ public class GameEngine {
 
     private String getUserInput(String prompt) {
         System.out.print(">> " + prompt);
-        return scanner.nextLine();
+        return this.getScanner().nextLine();
     }
 
     private int parseGameInput(int minChoices, int maxChoices) {
@@ -62,12 +62,12 @@ public class GameEngine {
     }
 
     public void runGame() {
-        getGame().gameLoop();
+        getGame().gameLoop(this.getScanner());
     }
 
     public void quitProgram() {
         System.out.print("Goodbye!");
-        this.scanner.close();
+        this.getScanner().close();
         System.exit(0);
     }
 

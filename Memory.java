@@ -19,7 +19,7 @@ public class Memory extends Game {
         return "";
     }
 
-    public void gameLoop() {
+    public void gameLoop(Scanner scanner) {
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
@@ -35,7 +35,7 @@ public class Memory extends Game {
         return true;
     }
 
-    public void takeTurn() {}
+    public void takeTurn(Scanner scanner) {}
 
     public void chooseTile() {}
 

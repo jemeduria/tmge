@@ -64,11 +64,11 @@ public abstract class Game implements Endable {
 
     public abstract String getMove(Scanner scanner);
 
-    public abstract void gameLoop();
+    public abstract void gameLoop(Scanner scanner);
 
     public abstract boolean isGameOver();
 
-    public abstract void takeTurn();
+    public abstract void takeTurn(Scanner scanner);
 
     public abstract void chooseTile();
 
