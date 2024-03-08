@@ -25,11 +25,9 @@ public class SameTileMatch implements Matchable {
                     if (tile.getDisplay().equals(toBeMatched)) {
                         matched.add(tile);
                     }
-
                 }
             }
         }
-
         // in the Memory game, matched should always be a length of 2
         if (matched.size() > 1) {
             return matched;

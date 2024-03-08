@@ -50,7 +50,7 @@ public class ConnectFour extends Game {
             int maxColumns = board.getColumns();
             int minColumns = 1;
 
-            // ********** LATER: move checking whether column is free to gameBoard.isValidMove()
+            // ********** LATER: move checking whether column is free to gameBoard.isValidMove()X
             while (true) {
                 // change user input into int
                 int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
