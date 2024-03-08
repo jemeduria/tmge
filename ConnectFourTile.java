@@ -12,7 +12,7 @@ public class ConnectFourTile extends DisappearingTile {
 
     public void setDisplayOptions() {
         this.displayOptions.add("X");
-        this.displayOptions.add("0");
+        this.displayOptions.add("O");
     }
 
 

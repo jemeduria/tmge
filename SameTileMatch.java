@@ -9,12 +9,13 @@ public class SameTileMatch implements Matchable {
         String toBeMatched = null;
         List<Tile> matched = new ArrayList<>();
 
+        // for each tile
         for (List<Tile> innerList : gameBoard) {
             for (Tile tile : innerList) {
-                // testing display only
+                // get display of tile
                 String display = tile.getDisplay();
 
-                // check non-null (via Tile display) and "removed" Memory Tile
+                // check for non-null Tile display and non-"removed" Memory Tile
                 if (!(display == null) && !(display.equals("X"))) {
                     // initialize toBeMatched
                     if (toBeMatched == null) {
@@ -29,6 +30,7 @@ public class SameTileMatch implements Matchable {
             }
         }
 
+        // in the Memory game, matched should always be a length of 2
         if (matched.size() > 1) {
             return matched;
         }

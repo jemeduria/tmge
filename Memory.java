@@ -9,14 +9,26 @@ public class Memory extends Game {
     private final List<Integer> numOptions = new ArrayList<>();
     public Memory() {
         super();
-        for (int i=minNumTile; i<=9; i++) {
+        for (int i=this.minNumTile; i<=this.maxNumTile; i++) {
             this.numOptions.add(i);
         }
         super.setGameBoard(new MemoryBoard(this.numOptions));
     }
 
+    public String getMove(Scanner scanner) {
+        return "";
+    }
+
     public void gameLoop() {
-        // to end game at any point, just a simple "return;" works
+
+        boolean gameIsOver = false;
+        while (!gameIsOver) {
+            ;
+            if (isGameOver()) {
+                gameIsOver = true;
+            }
+        }
+
     }
 
     public boolean isGameOver() {

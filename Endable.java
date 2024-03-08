@@ -1,3 +1,3 @@
 public interface Endable {
-    public void end();
+    public boolean end(boolean endGame);
 }

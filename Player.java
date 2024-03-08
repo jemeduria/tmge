@@ -3,9 +3,10 @@ public class Player {
     private int score;
     private String display = null;
 
-    public Player() {
-        this.ID = 0; // change later
+    public Player(int ID, String display) {
+        this.ID = ID;
         this.score = 0;
+        this.display = display
     }
 
     public void addPoint() {

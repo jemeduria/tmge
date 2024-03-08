@@ -3,13 +3,92 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConnectFour extends Game {
+
+    private Player playerTurn = null;
+    private List<Player> players = new ArrayList<>();
+    private final List<String> tileOptions = new ArrayList<>();
+
     public ConnectFour() {
         super();
+        // fix?? : duplicate code in ConnectFourTile.java
+        // initialize tile options
+        this.tileOptions.add("X");
+        this.tileOptions.add("O");
+
+        // initialize board
         super.setGameBoard(new ConnectFourBoard());
+
+        // initialize players
+        this.players.add(new Player(1, this.tileOptions.get(0)));
+        this.players.add(new Player(2, this.tileOptions.get(1)));
+        this.playerTurn =  this.players.get(1);
+    }
+
+    public Player getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public void setPlayerTurn(Player playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<String> getTileOptions() {
+        return tileOptions;
+    }
+
+    public String getMove(Scanner scanner) {
+        if (super.getGameBoard() instanceof ConnectFourBoard board) {
+            int maxColumns = board.getColumns();
+            int minColumns = 1;
+
+            while (true) {
+                // change user input into int
+                int move = super.parseNumber(scanner, "Player " + this.playerTurn.getID() + ", enter a column: ", minColumns, maxColumns);
+
+                // check if column is free (there is at least one available space at the top in that column)
+                if (board.getGameBoard().get(0).get(move-1).getDisplay() == null) {
+                    return String.valueOf(move);
+                } else {
+                    System.out.println("ERROR: Column is full. Choose a different column.");
+                }
+            }
+        }
+        return "-1";
+    }
+
+    private void switchPlayer() {
+        int amountOfPlayers = this.getPlayers().size();
+        int currentPlayer = this.getPlayerTurn().getID();
+        currentPlayer += 1;
+        if (currentPlayer > amountOfPlayers) {
+            currentPlayer = 1;
+        }
+
+        for (Player player : this.getPlayers()) {
+            if (player.getID() == currentPlayer) {
+                this.setPlayerTurn(player);
+            }
+        }
     }
 
     public void gameLoop() {
-        // to end game at any point, just a simple "return;" works
+        System.out.println("Please determine who will play Player 1 and Player 2.");
+
+        boolean gameRunning = true;
+        while (gameRunning) {
+            this.switchPlayer();
+
+            gameRunning = false;
+        }
     }
 
     public boolean isGameOver() {

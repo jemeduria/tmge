@@ -16,7 +16,7 @@ public class GameEngine {
         return scanner.nextLine();
     }
 
-    private int parseGameInput(int maxChoices) {
+    private int parseGameInput(int minChoices, int maxChoices) {
         int inputNum = -1;
         boolean isValidInput = false;
 
@@ -24,9 +24,9 @@ public class GameEngine {
             String chosenGame = getUserInput(">> Choose a game: ");
             try {
                 inputNum = Integer.parseInt(chosenGame);
-                isValidInput = inputNum <= maxChoices && inputNum > 0;
+                isValidInput = inputNum <= maxChoices && inputNum >= minChoices;
                 if (!isValidInput) {
-                    System.out.println("ERROR: Please enter a number between 1 and " + maxChoices + ".");
+                    System.out.println("ERROR: Please enter a number between " + minChoices + " and " + maxChoices + ".");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("ERROR: Invalid input. Please enter a valid number.");
@@ -42,7 +42,7 @@ public class GameEngine {
         System.out.println("2.     Memory (1 Player)");
         System.out.println("2.     Logout");
         System.out.println("3.     QUIT PROGRAM");
-        int chosenGame = parseGameInput(4);
+        int chosenGame = parseGameInput(1,4);
 
         switch (chosenGame) {
             case 1:

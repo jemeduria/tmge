@@ -12,7 +12,7 @@ public abstract class Game implements Endable {
     public Game() {}
 
     public Board getGameBoard() {
-        return gameBoard;
+        return this.gameBoard;
     }
 
     public void setGameBoard(Board gameBoard) {
@@ -31,13 +31,38 @@ public abstract class Game implements Endable {
         this.chosenTile = chosenTile;
     }
 
-    public void end() {
-        // do we need this? might change to just isGameOver??
+    public boolean end(boolean endGame) {
+        // should we remove Endable? if we have a gameLoop that runs on a condition,
+        // there might not be any point of keeping this?
+        return endGame;
     }
 
-    public String getMove(Scanner scanner) {
-        return "";
+    public int parseNumber(Scanner scanner, String prompt, int minChoices, int maxChoices) {
+        int inputNum = -1;
+        boolean isValidInput = false;
+
+        do {
+            String chosenGame = getUserInput(scanner, prompt);
+            try {
+                inputNum = Integer.parseInt(chosenGame);
+                isValidInput = inputNum <= maxChoices && inputNum >= minChoices;
+                if (!isValidInput) {
+                    System.out.println("ERROR: Please enter a number between " + minChoices + " and " + maxChoices + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: Invalid input. Please enter a valid number.");
+            }
+        } while (!isValidInput);
+
+        return inputNum;
     }
+
+    public String getUserInput(Scanner scanner, String prompt) {
+        System.out.print(">> " + prompt);
+        return scanner.nextLine();
+    }
+
+    public abstract String getMove(Scanner scanner);
 
     public abstract void gameLoop();
 
