@@ -14,11 +14,13 @@ public abstract class Board {
 
 	public abstract boolean isValidMove(String move);
 
-	public abstract void executeMove(List<Tile> tiles);
+	public abstract void execute(List<Tile> tiles, Player player);
 
 	public abstract List<Tile> createBoardTiles(List<Tile> tiles);
 
 	public abstract void createBoardGame(List<Tile> tiles);
+
+	public abstract void checkMatches();
 
 	public List<List<Tile>> getGameBoard() {
 		return this.gameBoard;

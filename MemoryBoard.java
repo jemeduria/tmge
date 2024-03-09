@@ -30,7 +30,7 @@ public class MemoryBoard extends Board {
         return true;
     }
 
-    public void executeMove(List<Tile> tiles) {
+    public void execute(List<Tile> tiles, Player player) {
         ;
     }
 
@@ -54,6 +54,10 @@ public class MemoryBoard extends Board {
                 rowTiles = new ArrayList<>();
             }
         }
+    }
+
+    public void checkMatches() {
+        ;
     }
 
 }

@@ -45,25 +45,23 @@ public class ConnectFour extends Game {
         return tileOptions;
     }
 
+    @Override
     public String getMove(Scanner scanner) {
-        if (super.getGameBoard() instanceof ConnectFourBoard board) {
-            int maxColumns = board.getColumns();
-            int minColumns = 1;
+        // choose a Tile and check if a valid move
 
-            // ********** LATER: move checking whether column is free to gameBoard.isValidMove()X
-            while (true) {
-                // change user input into int
-                int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
+        ConnectFourBoard board = getConnectFourBoard();
+        if (!(board == null)) {
 
-                // check if column is free (there is at least one available space at the top in that column)
-                if (board.getGameBoard().getFirst().get(move-1).getDisplay() == null) {
-                    return String.valueOf(move);
-                } else {
-                    System.out.println("ERROR: Column is full. Choose a different column.");
-                }
+            String move = null;
+            boolean validMove = false;
+            while (!validMove) {
+                move = this.chooseTile(scanner);
+                validMove = board.isValidMove(String.valueOf(move));
             }
+
+            return move;
         }
-        return "-1";
+        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
     }
 
     private void switchPlayer() {
@@ -79,6 +77,7 @@ public class ConnectFour extends Game {
         }
     }
 
+    @Override
     public void gameLoop(Scanner scanner) {
         System.out.println("Please determine who will play Player 1 and Player 2.");
 
@@ -90,30 +89,74 @@ public class ConnectFour extends Game {
         }
     }
 
+    @Override
     public boolean isGameOver() {
         // gameBoard.isFull();
         // checkPlayerScores();
         return true;
     }
 
+    @Override
     public void takeTurn(Scanner scanner) {
+        // announce turn
         System.out.println("    Player "
                 + this.getPlayerTurn().getID()
                 + ", place down a "
                 + this.getPlayerTurn().getDisplay());
-        this.getMove(scanner);
-        // super.getGameBoard().isValidMove()
+
+        // get move from user + check validity
+        String move = this.getMove(scanner);
+
+        // do the move
+        this.executeMove(move);
+
+        // check for matches & update status of game
         // this.checkMatch()
 
     }
 
-    public void chooseTile() {}
+    @Override
+    public String chooseTile(Scanner scanner) {
+        // ensures that the chosen move is a valid column number
+        ConnectFourBoard board = this.getConnectFourBoard();
+        if (!(board == null)) {
+            int maxColumns = board.getColumns();
+            int minColumns = 1;
 
-    public void checkMatch() {}
+            int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
+            return String.valueOf(move);
+        }
+        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
+    }
 
-    public boolean isMatch(List<Tile> tiles) {
+    @Override
+    public void checkMatch() {
+        ConnectFourBoard board = this.getConnectFourBoard();
+        if (!(board == null)) {
+            board.
+        }
+    }
+
+    @Override
+    public boolean isMatch(List<List<Tile>> gameBoard) {
         return true;
     }
 
-    public void chooseTile(List<Tile> tiles) {}
+    private ConnectFourBoard getConnectFourBoard() {
+        if (super.getGameBoard() instanceof ConnectFourBoard) {
+            return (ConnectFourBoard) super.getGameBoard();
+        }
+        return null;
+    }
+
+    @Override
+    public void executeMove(String move) {
+        List<Tile> moves = new ArrayList<Tile>();
+        ConnectFourBoard board = this.getConnectFourBoard();
+        if (!(board == null)) {
+            // return the til at top of the chosen column
+            moves.add(board.getGameBoard().getFirst().get(Integer.parseInt(move)));
+            board.execute(moves, this.getPlayerTurn());
+        }
+    }
 }

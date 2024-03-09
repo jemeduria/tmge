@@ -26,11 +26,28 @@ public class ConnectFourBoard extends Board {
     }
 
     public boolean isValidMove(String move) {
-        return true;
+        // check if column is free (there is at least one available space at the top in that column)
+        if (super.getGameBoard().getFirst().get(Integer.parseInt(move)-1).getDisplay() == null) {
+            return true;
+        } else {
+            System.out.println("ERROR: Column is full. Choose a different column.");
+            return false;
+        }
     }
 
-    public void executeMove(List<Tile> tiles) {
-        ;
+
+    public void execute(List<Tile> tiles, Player player) {
+        // in connect four, only one Tile can be placed
+        int chosenColumn = tiles.getFirst().getColumns();
+
+        for (int row = this.getRows()-1; row >= 0; row--) {
+            Tile currentTile = super.getGameBoard().get(row).get(chosenColumn);
+            if (currentTile.getDisplay() == null) {
+                // set Tile to Player's display symbol
+                currentTile.setDisplay(player.getDisplay());
+                return;
+            }
+        }
     }
 
     public List<Tile> createBoardTiles(List<Tile> tiles) {
@@ -54,5 +71,21 @@ public class ConnectFourBoard extends Board {
             }
         }
     }
+
+    public void checkMatches() {
+        List<Tile> matchedTiles = new ArrayList<>();
+        for (Matchable IMatch: super.getMatches()) {
+            List<Tile> foundMatches = IMatch.match(super.getGameBoard());
+            matchedTiles.addAll(foundMatches);
+        }
+
+        this.removeMatchedTiles(matchedTiles);
+    }
+
+    public void removeMatchedTiles(List<Tile> matchedTiles) {
+        // remove all matched tiles from the highest positioning tile first
+        ;
+    }
+
 
 }

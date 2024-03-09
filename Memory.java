@@ -15,10 +15,12 @@ public class Memory extends Game {
         super.setGameBoard(new MemoryBoard(this.numOptions));
     }
 
+    @Override
     public String getMove(Scanner scanner) {
         return "";
     }
 
+    @Override
     public void gameLoop(Scanner scanner) {
 
         boolean gameIsOver = false;
@@ -31,19 +33,37 @@ public class Memory extends Game {
 
     }
 
+    @Override
     public boolean isGameOver() {
         return true;
     }
 
+    @Override
     public void takeTurn(Scanner scanner) {}
 
-    public void chooseTile() {}
+    @Override
+    public String chooseTile(Scanner scanner) {
+        return "";
+    }
 
+    @Override
+    public void executeMove(String move) {
+        ;
+    }
+
+    @Override
     public void checkMatch() {}
 
-    public boolean isMatch(List<Tile> tiles) {
+    @Override
+    public boolean isMatch(List<List<Tile>> gameBoard) {
         return true;
     }
 
-    public void chooseTile(List<Tile> tiles) {}
+    private MemoryBoard getMemoryBoard() {
+        if (super.getGameBoard() instanceof MemoryBoard) {
+            return (MemoryBoard) super.getGameBoard();
+        }
+        return null;
+    }
+
 }

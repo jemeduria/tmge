@@ -70,12 +70,11 @@ public abstract class Game implements Endable {
 
     public abstract void takeTurn(Scanner scanner);
 
-    public abstract void chooseTile();
+    public abstract String chooseTile(Scanner scanner);
+    public abstract void executeMove(String move);
 
     public abstract void checkMatch();
 
-    public abstract boolean isMatch(List<Tile> tiles);
-
-    public abstract void chooseTile(List<Tile> tiles);
+    public abstract boolean isMatch(List<List<Tile>> gameBoard);
 
 }
