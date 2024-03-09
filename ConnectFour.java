@@ -133,7 +133,7 @@ public class ConnectFour extends Game {
     public void checkMatch() {
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
-            board.
+            board.checkMatches();
         }
     }
 
