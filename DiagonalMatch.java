@@ -1,134 +1,119 @@
 package tmge;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class DiagonalMatch implements Matchable {
-
     public DiagonalMatch() {
         ;
     }
 
     public List<Tile> match(List<List<Tile>> gameBoard) {
-    	
-    	
-    	for(int row = 0; row < 6; row++) {
-    		for(int col = 0; col < 7; col++) {
-    			
-    			
+    	HashSet<Tile> matches = new HashSet<>();
+    	ArrayList<ArrayList<Tile>> leftRightDiags = tlbrDiagonals(gameBoard);
+    	ArrayList<ArrayList<Tile>> rightLeftDiags = trblDiagonals(gameBoard);
+    	for(ArrayList<Tile> diag : leftRightDiags) {
+    		ArrayList<Tile> matchesInDiag = findMatches(diag);
+    		for(Tile t : matchesInDiag) {
+    			matches.add(t);
     		}
+    	}
+    	for(ArrayList<Tile> diag : rightLeftDiags) {
+    		ArrayList<Tile> matchesInDiag = findMatches(diag);
+    		for(Tile t : matchesInDiag) {
+    			matches.add(t);
+    		}
+    	}
+    	if(!matches.isEmpty()) {
+    		return new ArrayList<>(matches);
     	}
         return null;
     }
     
-    List<Tile> diagFromTop(List<List<Tile>> gameBoard){
-    	
-    	for(int i = 0; i < 2; i++) {
-            List<List<Tile>> repeatedElements = new ArrayList<>();
-            List<Tile> repeatedGroup = new ArrayList<>();
-    		for(int j = 0; j < 4; j++) {
-    			String curVal = gameBoard.get(j).get(j + i).getDisplay();
-    			String nextVal = gameBoard.get(j + 1).get(j + i + 1).getDisplay();
-    			if( != null && gameBoard.get(j).get(j).getDisplay().equals(cur)) {
-    				cur = gameBoard.get(j).get(j);
-    				
-    			}
+    ArrayList<ArrayList<Tile>> tlbrDiagonals(List<List<Tile>> board){
+    	int rows = board.size();
+    	int cols = board.get(0).size();
+    	ArrayList<ArrayList<Tile>> diags = new ArrayList<>();
+    	for(int c = 0; c < cols; c++) {
+    		ArrayList<Tile> diag = new ArrayList<>();
+    		int row = 0;
+    		int col = c;
+    		while(row < rows && col < cols) {
+    			diag.add(board.get(row).get(col));
+    			row++;
+    			col++;
     		}
+    		diags.add(diag);
     	}
-    }
-
-    List<Tile> topRight(List<List<Tile>> gameBoard, Tile tile){
-    	Tile cur;
-    	List<Tile> tileList = new ArrayList<Tile>();
-    	tileList.add(tile);
-
-		for(int i = 1; i < 4; i++) {
-			if((tile.getRows() - i) < 0 || (tile.getColumns() + i) > 7) {
-				break;
-			}
-			cur = gameBoard.get(tile.getRows() - i).get(tile.getColumns() + i);
-			String curVal = cur.getDisplay();
-			if(curVal != null && curVal.equals(tile.getDisplay())) {
-				tileList.add(cur);
-			}else {
-				break;
-			}
-		}
-    	
-		if(tileList.size() == 4) {
-			return tileList;
-		}
-    	return new ArrayList<Tile>();
+    	for(int r = 1; r < rows; r++) {
+    		ArrayList<Tile> diag = new ArrayList<>();
+    		int row = r;
+    		int col = 0;
+    		while(row < rows && col < cols) {
+    			diag.add(board.get(row).get(col));
+    			row++;
+    			col++;
+    		}
+    		diags.add(diag);
+    	}
+    	return diags;
     }
     
-    List<Tile> topLeft(List<List<Tile>> gameBoard, Tile tile){
-    	Tile cur;
-    	List<Tile> tileList = new ArrayList<Tile>();
-    	tileList.add(tile);
-
-		for(int i = 1; i < 4; i++) {
-			if((tile.getRows() - i) < 0 || (tile.getColumns() - i) < 0) {
-				break;
-			}
-			cur = gameBoard.get(tile.getRows() - i).get(tile.getColumns() - i);
-			String curVal = cur.getDisplay();
-			if(curVal != null && curVal.equals(tile.getDisplay())) {
-				tileList.add(cur);
-			}else {
-				break;
-			}
-		}
-    	
-		if(tileList.size() == 4) {
-			return tileList;
-		}
-    	return new ArrayList<Tile>();
+    ArrayList<ArrayList<Tile>> trblDiagonals(List<List<Tile>> board){
+    	int rows = board.size();
+    	int cols = board.get(0).size();
+    	ArrayList<ArrayList<Tile>> diags = new ArrayList<>();
+    	for(int c = cols - 1; c >= 0; c--) {
+    		ArrayList<Tile> diag = new ArrayList<>();
+    		int row = 0;
+    		int col = c;
+    		while(row < rows && col >= 0) {
+    			diag.add(board.get(row).get(col));
+    			row++;
+    			col--;
+    		}
+    		diags.add(diag);
+    	}
+    	for(int r = 1; r < rows; r++) {
+    		ArrayList<Tile> diag = new ArrayList<>();
+    		int row = r;
+    		int col = cols - 1;
+    		while(row < rows && col >= 0) {
+    			diag.add(board.get(row).get(col));
+    			row++;
+    			col--;
+    		}
+    		diags.add(diag);
+    	}
+    	return diags;
     }
     
-    List<Tile> bottomRight(List<List<Tile>> gameBoard, Tile tile){
-    	Tile cur;
-    	List<Tile> tileList = new ArrayList<Tile>();
-    	tileList.add(tile);
-
-		for(int i = 1; i < 4; i++) {
-			if((tile.getRows() + i) > 6 || (tile.getColumns() + i) > 7) {
-				break;
-			}
-			cur = gameBoard.get(tile.getRows() + i).get(tile.getColumns() + i);
-			String curVal = cur.getDisplay();
-			if(curVal != null && curVal.equals(tile.getDisplay())) {
-				tileList.add(cur);
-			}else {
-				break;
-			}
-		}
-    	
-		if(tileList.size() == 4) {
-			return tileList;
-		}
-    	return new ArrayList<Tile>();
+    ArrayList<Tile> findMatches(ArrayList<Tile> diag){
+    	ArrayList<Tile> matches = new ArrayList<>();
+    	ArrayList<Tile> group = new ArrayList<>();
+        for (int i = 0; i < diag.size() - 1; i++) {
+            Tile cur = diag.get(i);
+            Tile next = diag.get(i + 1);
+            if(cur.getDisplay() == null) {
+            	continue;
+            }
+            if (next.getDisplay().equals(cur.getDisplay())) {
+                group.add(cur);
+                if (i == diag.size() - 2) {
+                    group.add(next);
+                    matches.addAll(group);
+                }
+            } else {
+                if (!group.isEmpty()) {
+                    group.add(cur);
+                    if(group.size() >= 4) {
+                    	matches.addAll(group);
+                    }
+                    group.clear();
+                }
+            }
+        }
+        return matches;
     }
-    
-    List<Tile> bottomLeft(List<List<Tile>> gameBoard, Tile tile){
-    	Tile cur;
-    	List<Tile> tileList = new ArrayList<Tile>();
-    	tileList.add(tile);
 
-		for(int i = 1; i < 4; i++) {
-			if((tile.getRows() + i) > 6 || (tile.getColumns() - i) < 0) {
-				break;
-			}
-			cur = gameBoard.get(tile.getRows() + i).get(tile.getColumns() - i);
-			String curVal = cur.getDisplay();
-			if(curVal != null && curVal.equals(tile.getDisplay())) {
-				tileList.add(cur);
-			}else {
-				break;
-			}
-		}
-    	
-		if(tileList.size() == 4) {
-			return tileList;
-		}
-    	return new ArrayList<Tile>();
-    }
 }
