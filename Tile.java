@@ -1,6 +1,6 @@
 public abstract class Tile {
-    private int rows;
-    private int columns;
+    private int row;
+    private int column;
 
     private String display = null;
 
@@ -8,20 +8,20 @@ public abstract class Tile {
         ;
     }
 
-    public int getRows() {
-        return this.rows;
+    public int getRow() {
+        return this.row;
     }
 
-    public int getColumns() {
-        return this.columns;
+    public int getColumn() {
+        return this.column;
     }
 
     public void setRows(int row) {
-        this.rows = row;
+        this.row = row;
     }
 
     public void setColumns(int column) {
-        this.columns = column;
+        this.column = column;
     }
 
     public String getDisplay() {

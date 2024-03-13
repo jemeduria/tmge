@@ -13,7 +13,7 @@ public class MemoryBoard extends Board {
         this.addMatches();
         this.numOptions = numOptions;
     }
-
+    @Override
     public void addMatches() {
         super.getMatches().add(new SameTileMatch());
     }
@@ -26,18 +26,20 @@ public class MemoryBoard extends Board {
         return this.columns;
     }
 
+    @Override
     public boolean isValidMove(String move) {
         return true;
     }
 
-    public void execute(List<Tile> tiles, Player player) {
-        ;
-    }
+    @Override
+    public void execute(List<Tile> tiles, Player player) {}
 
+    @Override
     public List<Tile> createBoardTiles(List<Tile> tiles) {
-        return new ArrayList<>();
+        return new ArrayList<Tile>();
     }
 
+    @Override
     public void createBoardGame(List<Tile> tiles) {
         // create list of tiles per row
         List<Tile> rowTiles = new ArrayList<>();
@@ -56,8 +58,12 @@ public class MemoryBoard extends Board {
         }
     }
 
-    public void checkMatches() {
-        ;
+    @Override
+    public List<Tile> checkMatches() {
+        return new ArrayList<Tile>();
     }
+
+    @Override
+    public void removeMatchedTiles(List<Tile> matchedTiles) {}
 
 }

@@ -11,12 +11,6 @@ public class ConnectFourBoard extends Board {
         this.addMatches();
     }
 
-    public void addMatches() {
-        super.getMatches().add(new VerticalMatch());
-        super.getMatches().add(new HorizontalMatch());
-        super.getMatches().add(new DiagonalMatch());
-    }
-
     public int getRows() {
         return this.rows;
     }
@@ -25,6 +19,14 @@ public class ConnectFourBoard extends Board {
         return this.columns;
     }
 
+    @Override
+    public void addMatches() {
+        super.getMatches().add(new VerticalMatch());
+        super.getMatches().add(new HorizontalMatch());
+        super.getMatches().add(new DiagonalMatch());
+    }
+
+    @Override
     public boolean isValidMove(String move) {
         // check if column is free (there is at least one available space at the top in that column)
         if (super.getGameBoard().getFirst().get(Integer.parseInt(move)-1).getDisplay() == null) {
@@ -35,12 +37,14 @@ public class ConnectFourBoard extends Board {
         }
     }
 
-
+    @Override
     public void execute(List<Tile> tiles, Player player) {
         // in connect four, only one Tile can be placed
-        int chosenColumn = tiles.getFirst().getColumns();
+        int chosenColumn = tiles.getFirst().getColumn();
 
+        // start checking from the lowest Tile in that column
         for (int row = this.getRows()-1; row >= 0; row--) {
+
             Tile currentTile = super.getGameBoard().get(row).get(chosenColumn);
             if (currentTile.getDisplay() == null) {
                 // set Tile to Player's display symbol
@@ -50,10 +54,12 @@ public class ConnectFourBoard extends Board {
         }
     }
 
+    @Override
     public List<Tile> createBoardTiles(List<Tile> tiles) {
         return new ArrayList<>();
     }
 
+    @Override
     public void createBoardGame(List<Tile> tiles) {
         // create list of tiles per row
         List<Tile> rowTiles = new ArrayList<>();
@@ -72,20 +78,21 @@ public class ConnectFourBoard extends Board {
         }
     }
 
-    public void checkMatches() {
+    @Override
+    public List<Tile> checkMatches() {
+        // find any and all matches (horizontal, vertical, diagonal, or a mix)
         List<Tile> matchedTiles = new ArrayList<>();
         for (Matchable IMatch: super.getMatches()) {
             List<Tile> foundMatches = IMatch.match(super.getGameBoard());
             matchedTiles.addAll(foundMatches);
         }
 
-        this.removeMatchedTiles(matchedTiles);
+        // return all matchedTiles
+        return (!matchedTiles.isEmpty()) ? matchedTiles : null;
     }
 
-    public void removeMatchedTiles(List<Tile> matchedTiles) {
-        // remove all matched tiles from the highest positioning tile first
-        ;
-    }
+    @Override
+    public void removeMatchedTiles(List<Tile> matchedTiles) {}
 
 
 }

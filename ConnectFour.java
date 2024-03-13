@@ -45,6 +45,24 @@ public class ConnectFour extends Game {
         return tileOptions;
     }
 
+    private ConnectFourBoard getConnectFourBoard() {
+        if (super.getGameBoard() instanceof ConnectFourBoard) {
+            return (ConnectFourBoard) super.getGameBoard();
+        }
+        return null;
+    }
+
+    private void switchPlayer() {
+        int currentPlayerID = (this.getPlayerTurn().getID() % this.getPlayers().size()) + 1;
+
+        for (Player player : this.getPlayers()) {
+            if (player.getID() == currentPlayerID) {
+                this.setPlayerTurn(player);
+                break;
+            }
+        }
+    }
+
     @Override
     public String getMove(Scanner scanner) {
         // choose a Tile and check if a valid move
@@ -62,19 +80,6 @@ public class ConnectFour extends Game {
             return move;
         }
         return null; // MAJOR ISSUE IF THIS CODE IS REACHED
-    }
-
-    private void switchPlayer() {
-        int currentPlayer = this.getPlayerTurn().getID() + 1;
-        if (currentPlayer > this.getPlayers().size()) {
-            currentPlayer = 1;
-        }
-
-        for (Player player : this.getPlayers()) {
-            if (player.getID() == currentPlayer) {
-                this.setPlayerTurn(player);
-            }
-        }
     }
 
     @Override
@@ -111,7 +116,7 @@ public class ConnectFour extends Game {
         this.executeMove(move);
 
         // check for matches & update status of game
-        // this.checkMatch()
+        this.checkMatch();
 
     }
 
@@ -133,7 +138,14 @@ public class ConnectFour extends Game {
     public void checkMatch() {
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
-            board.checkMatches();
+
+            List<Tile> matches = board.checkMatches();
+            if (!matches.isEmpty()) {
+
+                // addPlayerPoint();
+                // removeMatchedTiles(matchedTiles);
+
+            }
         }
     }
 
@@ -142,19 +154,12 @@ public class ConnectFour extends Game {
         return true;
     }
 
-    private ConnectFourBoard getConnectFourBoard() {
-        if (super.getGameBoard() instanceof ConnectFourBoard) {
-            return (ConnectFourBoard) super.getGameBoard();
-        }
-        return null;
-    }
-
     @Override
     public void executeMove(String move) {
         List<Tile> moves = new ArrayList<Tile>();
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
-            // return the til at top of the chosen column
+            // return the Tile at top of the chosen column
             moves.add(board.getGameBoard().getFirst().get(Integer.parseInt(move)));
             board.execute(moves, this.getPlayerTurn());
         }

@@ -1,12 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.swing.UIManager.get;
-
 public class VerticalMatch implements Matchable {
-    public VerticalMatch() {
-        ;
-    }
+    public VerticalMatch() {}
 
     public List<Tile> match(List<List<Tile>> gameBoard) {
 
@@ -44,7 +40,7 @@ public class VerticalMatch implements Matchable {
 
                     } else if (currentDisplay.equals(matched.getFirst().getDisplay())) {
                         // matched has at least one Tile in it
-                        // check to see if the displays are the same
+                        // add if the displays are the same
                         matched.add(currentTile);
 
                     } else if (matched.size() <= 3){
