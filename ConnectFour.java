@@ -44,9 +44,29 @@ public class ConnectFour extends Game {
         return tileOptions;
     }
 
+<<<<<<< Updated upstream
     private ConnectFourBoard getConnectFourBoard() {
         if (super.getGameBoard() instanceof ConnectFourBoard) {
             return (ConnectFourBoard) super.getGameBoard();
+=======
+    public String getMove(Scanner scanner) {
+        if (super.getGameBoard() instanceof ConnectFourBoard board) {
+            int maxColumns = board.getColumns();
+            int minColumns = 1;
+
+            // ********** LATER: move checking whether column is free to gameBoard.isValidMove()X
+            while (true) {
+                // change user input into int
+                int move = super.parseNumber(scanner, "Enter a column: ", minColumns, maxColumns);
+
+                // check if column is free (there is at least one available space at the top in that column)
+                if (board.getGameBoard().get(0).get(move-1).getDisplay() == null) {
+                    return String.valueOf(move);
+                } else {
+                    System.out.println("ERROR: Column is full. Choose a different column.");
+                }
+            }
+>>>>>>> Stashed changes
         }
         return null;
     }

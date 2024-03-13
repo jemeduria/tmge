@@ -7,6 +7,8 @@ public class SimpleDisappear implements Disappearable {
     }
 
     public void disappear(List<DisappearingTile> tiles, List<List<Tile>> gameBoard) {
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // check whether it is vertical or not
         if (tiles.get(0).getRow() == tiles.get(1).getRow()) {
             //vertical
@@ -44,6 +46,12 @@ public class SimpleDisappear implements Disappearable {
                 }
 //            }
             }
+=======
+=======
+>>>>>>> Stashed changes
+        for (DisappearingTile tile: tiles) {
+            tile.disappear();
+>>>>>>> Stashed changes
         }
     }
 
