@@ -42,7 +42,7 @@ public class Memory extends Game {
     public void takeTurn(Scanner scanner) {}
 
     @Override
-    public String chooseTile(Scanner scanner) {
+    public String choose(Scanner scanner) {
         return "";
     }
 
@@ -53,11 +53,6 @@ public class Memory extends Game {
 
     @Override
     public void checkMatch() {}
-
-    @Override
-    public boolean isMatch(List<List<Tile>> gameBoard) {
-        return true;
-    }
 
     private MemoryBoard getMemoryBoard() {
         if (super.getGameBoard() instanceof MemoryBoard) {
