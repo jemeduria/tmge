@@ -32,7 +32,6 @@ public class ConnectFour extends Game {
         this.playerTurn = playerTurn;
     }
 
-    @Override
     public List<Player> getPlayers() {
         return players;
     }
@@ -44,6 +43,7 @@ public class ConnectFour extends Game {
     public List<String> getTileOptions() {
         return tileOptions;
     }
+
 
     private ConnectFourBoard getConnectFourBoard() {
         if (super.getGameBoard() instanceof ConnectFourBoard) {
@@ -64,25 +64,6 @@ public class ConnectFour extends Game {
     }
 
     @Override
-    public String getMove(Scanner scanner) {
-        // choose a Tile and check if a valid move
-
-        ConnectFourBoard board = getConnectFourBoard();
-        if (!(board == null)) {
-
-            String move = null;
-            boolean validMove = false;
-            while (!validMove) {
-                move = this.chooseTile(scanner);
-                validMove = board.isValidMove(String.valueOf(move));
-            }
-
-            return move;
-        }
-        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
-    }
-
-    @Override
     public void gameLoop(Scanner scanner) {
         System.out.println("Please determine who will play Player 1 and Player 2.");
 
@@ -92,13 +73,6 @@ public class ConnectFour extends Game {
             this.takeTurn(scanner);
             gameRunning = !this.isGameOver();
         }
-    }
-
-    @Override
-    public boolean isGameOver() {
-        // gameBoard.isFull();
-        // checkPlayerScores();
-        return true;
     }
 
     @Override
@@ -121,7 +95,26 @@ public class ConnectFour extends Game {
     }
 
     @Override
-    public String chooseTile(Scanner scanner) {
+    public String getMove(Scanner scanner) {
+        // choose a Tile and check if a valid move
+
+        ConnectFourBoard board = getConnectFourBoard();
+        if (!(board == null)) {
+
+            String move = null;
+            boolean validMove = false;
+            while (!validMove) {
+                move = this.choose(scanner);
+                validMove = board.isValidMove(String.valueOf(move));
+            }
+
+            return move;
+        }
+        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
+    }
+
+    @Override
+    public String choose(Scanner scanner) {
         // ensures that the chosen move is a valid column number
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
@@ -135,26 +128,6 @@ public class ConnectFour extends Game {
     }
 
     @Override
-    public void checkMatch() {
-        ConnectFourBoard board = this.getConnectFourBoard();
-        if (!(board == null)) {
-
-            List<Tile> matches = board.checkMatches();
-            if (!matches.isEmpty()) {
-
-                // addPlayerPoint();
-                // removeMatchedTiles(matchedTiles);
-
-            }
-        }
-    }
-
-    @Override
-    public boolean isMatch(List<List<Tile>> gameBoard) {
-        return true;
-    }
-
-    @Override
     public void executeMove(String move) {
         List<Tile> moves = new ArrayList<Tile>();
         ConnectFourBoard board = this.getConnectFourBoard();
@@ -164,4 +137,30 @@ public class ConnectFour extends Game {
             board.execute(moves, this.getPlayerTurn());
         }
     }
+
+    @Override
+    public void checkMatch() {
+        ConnectFourBoard board = this.getConnectFourBoard();
+        if (!(board == null)) {
+
+            List<Tile> matches = board.checkMatches();
+            if (!matches.isEmpty()) {
+
+                // addPlayerPoint();
+                // board.removeMatchedTiles(matchedTiles);
+
+            }
+        }
+    }
+
+    @Override
+    public void addPlayerPoint(List<Tile> tiles) {}
+
+    @Override
+    public boolean isGameOver() {
+        // gameBoard.isFull();
+        // checkPlayerScores();
+        return true;
+    }
+
 }

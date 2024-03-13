@@ -62,19 +62,13 @@ public abstract class Game implements Endable {
         return scanner.nextLine();
     }
 
-    public abstract String getMove(Scanner scanner);
-
     public abstract void gameLoop(Scanner scanner);
-
-    public abstract boolean isGameOver();
-
     public abstract void takeTurn(Scanner scanner);
-
-    public abstract String chooseTile(Scanner scanner);
+    public abstract String getMove(Scanner scanner);
+    public abstract String choose(Scanner scanner);
     public abstract void executeMove(String move);
-
     public abstract void checkMatch();
-
-    public abstract boolean isMatch(List<List<Tile>> gameBoard);
+    public abstract void addPlayerPoint(List<Tile> tiles);
+    public abstract boolean isGameOver();
 
 }
