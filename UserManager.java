@@ -34,6 +34,7 @@ public class UserManager {
 
     public void logout() {
         this.setCurrentUser(null);
+        System.out.println("You have been LOGGED OUT! Enter a username to login again.");
     }
 
     public String getUserInput(Scanner scanner, String prompt) {

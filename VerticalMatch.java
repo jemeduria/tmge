@@ -11,9 +11,14 @@ public class VerticalMatch implements Matchable {
         List<Tile> matched = new ArrayList<>();
 
         int rows = gameBoard.size();
+<<<<<<< Updated upstream
         int columns = gameBoard.getFirst().size();
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+=======
+//        int columns = gameBoard.getFirst().size();
+        int columns = gameBoard.get(0).size();
+>>>>>>> Stashed changes
         List<Tile> matched = new ArrayList<>();
 
         // for each column
@@ -44,7 +49,8 @@ public class VerticalMatch implements Matchable {
                         // just add to matched to find possible matches
                         matched.add(currentTile);
 
-                    } else if (currentDisplay.equals(matched.getFirst().getDisplay())) {
+//                    } else if (currentDisplay.equals(matched.getFirst().getDisplay())) {
+                    } else if (currentDisplay.equals(matched.get(0).getDisplay())) {
                         // matched has at least one Tile in it
                         // add if the displays are the same
                         matched.add(currentTile);

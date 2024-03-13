@@ -40,8 +40,8 @@ public class GameEngine {
         System.out.println("Game Options:");
         System.out.println("1.     Connect Four (2 Players)");
         System.out.println("2.     Memory (1 Player)");
-        System.out.println("2.     Logout");
-        System.out.println("3.     QUIT PROGRAM");
+        System.out.println("3.     Logout");
+        System.out.println("4.     QUIT PROGRAM");
         int chosenGame = parseGameInput(1,4);
 
         switch (chosenGame) {

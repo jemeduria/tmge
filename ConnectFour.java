@@ -133,7 +133,8 @@ public class ConnectFour extends Game {
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
             // return the Tile at top of the chosen column
-            moves.add(board.getGameBoard().getFirst().get(Integer.parseInt(move)));
+//            moves.add(board.getGameBoard().getFirst().get(Integer.parseInt(move)));
+            moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)));
             board.execute(moves, this.getPlayerTurn());
         }
     }
