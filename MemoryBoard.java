@@ -52,7 +52,7 @@ public class MemoryBoard extends Board {
     public void execute(List<Tile> tiles, Player player) {}
 
     @Override
-    public List<Tile> createBoardTiles(List<Tile> tiles) {
+    public List<Tile> createBoardTiles() {
         return new ArrayList<Tile>();
     }
 

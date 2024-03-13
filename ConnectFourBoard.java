@@ -9,7 +9,7 @@ public class ConnectFourBoard extends Board {
     public ConnectFourBoard() {
         super();
         this.addMatches();
-        this.createBoardGame();
+        this.createBoardGame(new ArrayList<>()); // placeholder input
     }
 
     public int getRows() {
