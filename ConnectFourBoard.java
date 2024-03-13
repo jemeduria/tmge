@@ -9,6 +9,7 @@ public class ConnectFourBoard extends Board {
     public ConnectFourBoard() {
         super();
         this.addMatches();
+        this.createBoardGame();
     }
 
     public int getRows() {
@@ -29,7 +30,8 @@ public class ConnectFourBoard extends Board {
     @Override
     public boolean isValidMove(String move) {
         // check if column is free (there is at least one available space at the top in that column)
-        if (super.getGameBoard().getFirst().get(Integer.parseInt(move)-1).getDisplay() == null) {
+//        if (super.getGameBoard().getFirst().get(Integer.parseInt(move)-1).getDisplay() == null) {
+        if (super.getGameBoard().get(0).get(Integer.parseInt(move)-1).getDisplay() == null) {
             return true;
         } else {
             System.out.println("ERROR: Column is full. Choose a different column.");
@@ -40,7 +42,8 @@ public class ConnectFourBoard extends Board {
     @Override
     public void execute(List<Tile> tiles, Player player) {
         // in connect four, only one Tile can be placed
-        int chosenColumn = tiles.getFirst().getColumn();
+//        int chosenColumn = tiles.getFirst().getColumn();
+        int chosenColumn = tiles.get(0).getColumn();
 
         // start checking from the lowest Tile in that column
         for (int row = this.getRows()-1; row >= 0; row--) {
@@ -55,7 +58,7 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public List<Tile> createBoardTiles(List<Tile> tiles) {
+    public List<Tile> createBoardTiles() {
         return new ArrayList<>();
     }
 
