@@ -20,8 +20,8 @@ public abstract class Board {
 	public abstract void addMatches();
 	public abstract boolean isValidMove(String move);
 	public abstract void execute(List<Tile> tiles, Player player);
-	public abstract List<Tile> createBoardTiles(List<Tile> tiles);
-	public abstract void createBoardGame();
+	public abstract List<Tile> createBoardTiles();
+	public abstract void createBoardGame(List<Tile> tiles);
 	public abstract List<Tile> checkMatches();
 	public abstract void removeMatchedTiles(List<Tile> matchedTiles);
 
