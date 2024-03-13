@@ -28,7 +28,24 @@ public class MemoryBoard extends Board {
 
     @Override
     public boolean isValidMove(String move) {
-        return true;
+    	String pattern = "\\d+\\s\\d+";
+    	if(move.matches(pattern)) {
+    		String[] parts = move.split(" ");
+            try 
+            {
+                int row = Integer.parseInt(parts[0]);
+                int col = Integer.parseInt(parts[1]);
+                if(0 <= row && row <= 4 && col < 5 && col >= 0) {
+                	if(!this.getGameBoard().get(row).get(col).getDisplay().equals("X"))
+                		return true;
+                }
+                return false;
+                
+            } catch (NumberFormatException e) {
+                return false;
+            }
+    	}
+        return false;
     }
 
     @Override

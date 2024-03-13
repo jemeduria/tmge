@@ -17,7 +17,13 @@ public class Memory extends Game {
 
     @Override
     public String getMove(Scanner scanner) {
-        return "";
+    	String move;
+    	do {
+    		System.out.println("Enter the position of your choice in this format <Row Number><Space><Column Number>");
+    		move = scanner.nextLine();
+    	}
+    	while(!this.getGameBoard().isValidMove(move));
+        return move;
     }
 
     @Override
@@ -35,6 +41,11 @@ public class Memory extends Game {
 
     @Override
     public boolean isGameOver() {
+    	for(int i = 0; i < this.getMemoryBoard().getRows(); i++) {
+    		for(int j = 0; j < this.getMemoryBoard().getColumns(); j++) {
+    			
+    		}
+    	}
         return true;
     }
 

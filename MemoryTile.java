@@ -25,7 +25,7 @@ public class MemoryTile extends DisappearingTile {
     }
 
     public void disappear() {
-        super.setDisplay(null);
+        super.setDisplay("X");
     }
 
     public void addTileDisplay(String display) {
