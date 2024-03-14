@@ -153,9 +153,24 @@ public class ConnectFour extends Game {
             }
         }
     }
-
     @Override
-    public void addPlayerPoint(List<Tile> tiles) {}
+    public void addPlayerPoint(List<Tile> tiles) {
+        //Add up the matched tiles corresspoding to the player's display.
+        //if it is over 25, Game is Over.
+        for (Tile tile : tiles) {
+            for (Player player : this.getPlayers()) {
+                if (tile.getDisplay().equals(player.getDisplay())) {
+                    player.addPoint();
+                    if (player.getScore() >= 25) {
+                        System.out.println("Player " + player.getID() + " wins with 25 or more points!");
+//                        this.isGameOver = true;
+//                       Somehow END THE GAME
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public boolean isGameOver() {
