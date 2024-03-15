@@ -3,9 +3,11 @@ import java.util.List;
 
 public class MemoryTile extends DisappearingTile {
     private final List<String> displayOptions = new ArrayList<String>();
-
-    public MemoryTile(List<Integer> tileOptions) {
-        super();
+    private int value;
+    
+    public MemoryTile(List<Integer> tileOptions, int row, int col, int val) {
+    	super(row, col);
+    	this.value = val;
         this.setDisplayOptions(tileOptions);
     }
 
@@ -30,6 +32,14 @@ public class MemoryTile extends DisappearingTile {
 
     public void addTileDisplay(String display) {
         super.setDisplay(display);
+    }
+    
+    public void setValue(int val) {
+        value = val;
+    }
+    
+    public int getValue() {
+        return value;
     }
 
 }

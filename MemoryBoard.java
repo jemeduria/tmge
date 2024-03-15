@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MemoryBoard extends Board {
@@ -36,7 +37,7 @@ public class MemoryBoard extends Board {
                 int row = Integer.parseInt(parts[0]);
                 int col = Integer.parseInt(parts[1]);
                 if(0 <= row && row <= 4 && col < 5 && col >= 0) {
-                	if(!this.getGameBoard().get(row).get(col).getDisplay().equals("X"))
+                	if(!super.getGameBoard().get(row).get(col).getDisplay().equals("X"))
                 		return true;
                 }
                 return false;
@@ -52,8 +53,29 @@ public class MemoryBoard extends Board {
     public void execute(List<Tile> tiles, Player player) {}
 
     @Override
-    public List<Tile> createBoardTiles() {
-        return new ArrayList<Tile>();
+    public List<MemoryTile> createBoardTiles() {
+    	//populates list with tiles with row, col
+    	List<MemoryTile> list = new ArrayList<MemoryTile>();
+    	for(int i = 0; i < rows; i++) {
+    		for(int j = 0; j < columns; j++) {
+    			list.add(new MemoryTile(numOptions, i, j, 0));
+    		}
+    	}
+    	
+    	//creates values for tiles and randomizes
+    	List<Integer> temp = new ArrayList<Integer>();
+    	for(int i = 0; i < (rows*columns)/2; i++){
+    		temp.add(i);
+    		temp.add(i);
+    	}
+    	Collections.shuffle(temp);
+    	
+    	//assigns the values to tiles
+    	for(int i = 0; i < temp.size(); i++) {
+    		list.get(i).setValue(temp.get(i));
+    	}
+    	
+        return list;
     }
 
     @Override

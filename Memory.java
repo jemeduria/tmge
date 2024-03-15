@@ -13,6 +13,7 @@ public class Memory extends Game {
             this.numOptions.add(i);
         }
         super.setGameBoard(new MemoryBoard(this.numOptions));
+        
     }
 
     @Override
@@ -22,7 +23,7 @@ public class Memory extends Game {
     		System.out.println("Enter the position of your choice in this format <Row Number><Space><Column Number>");
     		move = scanner.nextLine();
     	}
-    	while(!this.getGameBoard().isValidMove(move));
+    	while(!this.getMemoryBoard().isValidMove(move));
         return move;
     }
 
@@ -43,14 +44,19 @@ public class Memory extends Game {
     public boolean isGameOver() {
     	for(int i = 0; i < this.getMemoryBoard().getRows(); i++) {
     		for(int j = 0; j < this.getMemoryBoard().getColumns(); j++) {
-    			
+    			if(!this.getMemoryBoard().getGameBoard().get(i).get(j).equals("X")) {
+    				return false;
+    			}
     		}
     	}
         return true;
     }
 
     @Override
-    public void takeTurn(Scanner scanner) {}
+    public void takeTurn(Scanner scanner) {
+    	String move = getMove(scanner);
+    	
+    }
 
     @Override
     public String choose(Scanner scanner) {
@@ -59,7 +65,12 @@ public class Memory extends Game {
 
     @Override
     public void executeMove(String move) {
-        ;
+        String[] moves = move.split(" ");
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+            //moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)));
+            
+        }
     }
 
     @Override
