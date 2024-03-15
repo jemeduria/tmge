@@ -40,15 +40,14 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void execute(List<ConnectFourTile> tiles, Player player) {
+    public void execute(List<Tile> tiles, Player player) {
         // in connect four, only one Tile can be placed
-//        int chosenColumn = tiles.getFirst().getColumn();
         int chosenColumn = tiles.get(0).getColumn();
 
         // start checking from the lowest Tile in that column
         for (int row = this.getRows()-1; row >= 0; row--) {
 
-            ConnectFourTile currentTile = super.getGameBoard().get(row).get(chosenColumn);
+            Tile currentTile = super.getGameBoard().get(row).get(chosenColumn);
             if (currentTile.getDisplay() == null) {
                 // set Tile to Player's display symbol
                 currentTile.setDisplay(player.getDisplay());
@@ -58,15 +57,12 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public List<ConnectFourTile> createBoardTiles() {
-//        return new ArrayList<>();   // // original code
-
-        List<ConnectFourTile> tiles = new ArrayList<>();
-
+    public List<Tile> createBoardTiles() {
+        List<Tile> tiles = new ArrayList<>();
         // Create and add tiles to the list based on the number of rows and columns
         for (int row = 0; row < this.getRows(); row++) {
             for (int col = 0; col < this.getColumns(); col++) {
-                ConnectFourTile tile = new ConnectFourTile(row, col);
+                Tile tile = new ConnectFourTile(row, col);
                 tiles.add(tile);
             }
         }
@@ -75,38 +71,20 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void createBoardGame(List<ConnectFourTile> tiles) {
-//    // ---- original code starts here.
-//        // create list of tiles per row
-//        List<Tile> rowTiles = new ArrayList<>();
-//
-//        for (Tile tile: tiles) {
-//            // add a tile
-//            rowTiles.add(tile);
-//
-//            // if the row is maxed out to column size
-//            if (rowTiles.size() == this.getColumns()) {
-//                // add row of tiles to gameBoard
-//                super.getGameBoard().add(rowTiles);
-//                // empty list for new row
-//                rowTiles = new ArrayList<>();
-//            }
-//        }
-//    // --- original code ends here.
-
+    public void createBoardGame(List<Tile> tiles) {
         // Clear the existing game board before populating it
         super.getGameBoard().clear();
 
         // Create list of tiles per row
-        List<ConnectFourTile> rowTiles = new ArrayList<>();
+        List<Tile> rowTiles = new ArrayList<>();
 
         // Populate the game board with the provided tiles
-        for (ConnectFourTile t : tiles) {
+        for (Tile tile: tiles) {
             // Add a tile
-            rowTiles.add(t);
+            rowTiles.add(tile);
 
             // If the row is maxed out to column size
-            if (rowTiles.size() == this.getColumns()) {
+            if (rowTiles.size() == columns) {
                 // Add row of tiles to gameBoard
                 super.getGameBoard().add(rowTiles);
                 // Empty list for new row
@@ -116,11 +94,11 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public List<ConnectFourTile> checkMatches() {
+    public List<Tile> checkMatches() {
         // find any and all matches (horizontal, vertical, diagonal, or a mix)
-        List<ConnectFourTile> matchedTiles = new ArrayList<>();
+        List<Tile> matchedTiles = new ArrayList<>();
         for (Matchable IMatch: super.getMatches()) {
-            List<ConnectFourTile> foundMatches = IMatch.match(super.getGameBoard());
+            List<Tile> foundMatches = IMatch.match(super.getGameBoard());
             matchedTiles.addAll(foundMatches);
         }
 
@@ -129,7 +107,7 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void removeMatchedTiles(List<ConnectFourTile> matchedTiles) {}
+    public void removeMatchedTiles(List<Tile> matchedTiles) {}
 
 
 }

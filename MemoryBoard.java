@@ -13,6 +13,8 @@ public class MemoryBoard extends Board {
         super();
         this.addMatches();
         this.numOptions = numOptions;
+
+        this.createBoardGame(this.createBoardTiles());
     }
     @Override
     public void addMatches() {
@@ -25,6 +27,10 @@ public class MemoryBoard extends Board {
 
     public int getColumns() {
         return this.columns;
+    }
+
+    public List<Integer> getNumOptions() {
+        return numOptions;
     }
 
     @Override
@@ -53,33 +59,35 @@ public class MemoryBoard extends Board {
     public void execute(List<Tile> tiles, Player player) {}
 
     @Override
-    public List<MemoryTile> createBoardTiles() {
-    	//populates list with tiles with row, col
-    	List<MemoryTile> list = new ArrayList<MemoryTile>();
-    	for(int i = 0; i < rows; i++) {
-    		for(int j = 0; j < columns; j++) {
-    			list.add(new MemoryTile(numOptions, i, j, 0));
-    		}
-    	}
-    	
-    	//creates values for tiles and randomizes
-    	List<Integer> temp = new ArrayList<Integer>();
-    	for(int i = 0; i < (rows*columns)/2; i++){
-    		temp.add(i);
-    		temp.add(i);
-    	}
-    	Collections.shuffle(temp);
-    	
-    	//assigns the values to tiles
-    	for(int i = 0; i < temp.size(); i++) {
-    		list.get(i).setValue(temp.get(i));
-    	}
-    	
-        return list;
+    public List<Tile> createBoardTiles() {
+        // main list to get create Memory Tiles
+        List<Tile> memoryTiles = new ArrayList<>();
+
+        // double the amount of the each number (for matching)
+        List<Integer> allMemoryValues = new ArrayList<>(numOptions);
+        allMemoryValues.addAll(numOptions);
+
+        // shuffle all values
+        Collections.shuffle(allMemoryValues);
+
+        // create and initialize all Memory Tiles with its value
+        int valIndex = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Integer value = allMemoryValues.get(valIndex % allMemoryValues.size());
+                memoryTiles.add(new MemoryTile(numOptions, i, j, value));
+                valIndex++;
+            }
+        }
+
+        return memoryTiles;
     }
 
     @Override
     public void createBoardGame(List<Tile> tiles) {
+        // Clear the existing game board before populating it
+        super.getGameBoard().clear();
+
         // create list of tiles per row
         List<Tile> rowTiles = new ArrayList<>();
 
@@ -88,7 +96,7 @@ public class MemoryBoard extends Board {
             rowTiles.add(tile);
 
             // if the row is maxed out to column size
-            if (rowTiles.size() == this.getColumns()) {
+            if (rowTiles.size() == columns) {
                 // add row of tiles to gameBoard
                 super.getGameBoard().add(rowTiles);
                 // empty list for new row
@@ -99,7 +107,15 @@ public class MemoryBoard extends Board {
 
     @Override
     public List<Tile> checkMatches() {
-        return new ArrayList<Tile>();
+        // find any and all matches (horizontal, vertical, diagonal, or a mix)
+        List<Tile> matchedTiles = new ArrayList<>();
+        for (Matchable IMatch: super.getMatches()) {
+            List<Tile> foundMatches = IMatch.match(super.getGameBoard());
+            matchedTiles.addAll(foundMatches);
+        }
+
+        // return all matchedTiles
+        return (!matchedTiles.isEmpty()) ? matchedTiles : null;
     }
 
     @Override
