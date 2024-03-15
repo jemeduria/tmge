@@ -4,8 +4,14 @@ public abstract class Tile {
 
     private String display = null;
 
+    // default constructor
     public Tile() {
-        ;
+    }
+
+    // parameterized constructor
+    public Tile(int r, int c) {
+        this.row = r;
+        this.column = c;
     }
 
     public int getRow() {
@@ -16,11 +22,11 @@ public abstract class Tile {
         return this.column;
     }
 
-    public void setRows(int row) {
+    public void setRow(int row) {
         this.row = row;
     }
 
-    public void setColumns(int column) {
+    public void setColumn(int column) {
         this.column = column;
     }
 

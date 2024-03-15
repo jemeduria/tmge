@@ -40,7 +40,7 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void execute(List<Tile> tiles, Player player) {
+    public void execute(List<ConnectFourTile> tiles, Player player) {
         // in connect four, only one Tile can be placed
 //        int chosenColumn = tiles.getFirst().getColumn();
         int chosenColumn = tiles.get(0).getColumn();
@@ -48,7 +48,7 @@ public class ConnectFourBoard extends Board {
         // start checking from the lowest Tile in that column
         for (int row = this.getRows()-1; row >= 0; row--) {
 
-            Tile currentTile = super.getGameBoard().get(row).get(chosenColumn);
+            ConnectFourTile currentTile = super.getGameBoard().get(row).get(chosenColumn);
             if (currentTile.getDisplay() == null) {
                 // set Tile to Player's display symbol
                 currentTile.setDisplay(player.getDisplay());
@@ -58,35 +58,69 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public List<Tile> createBoardTiles() {
-        return new ArrayList<>();
+    public List<ConnectFourTile> createBoardTiles() {
+//        return new ArrayList<>();   // // original code
+
+        List<ConnectFourTile> tiles = new ArrayList<>();
+
+        // Create and add tiles to the list based on the number of rows and columns
+        for (int row = 0; row < this.getRows(); row++) {
+            for (int col = 0; col < this.getColumns(); col++) {
+                ConnectFourTile tile = new ConnectFourTile(row, col);
+                tiles.add(tile);
+            }
+        }
+
+        return tiles; // return the ArrayList of type Tile
     }
 
     @Override
-    public void createBoardGame(List<Tile> tiles) {
-        // create list of tiles per row
-        List<Tile> rowTiles = new ArrayList<>();
+    public void createBoardGame(List<ConnectFourTile> tiles) {
+//    // ---- original code starts here.
+//        // create list of tiles per row
+//        List<Tile> rowTiles = new ArrayList<>();
+//
+//        for (Tile tile: tiles) {
+//            // add a tile
+//            rowTiles.add(tile);
+//
+//            // if the row is maxed out to column size
+//            if (rowTiles.size() == this.getColumns()) {
+//                // add row of tiles to gameBoard
+//                super.getGameBoard().add(rowTiles);
+//                // empty list for new row
+//                rowTiles = new ArrayList<>();
+//            }
+//        }
+//    // --- original code ends here.
 
-        for (Tile tile: tiles) {
-            // add a tile
-            rowTiles.add(tile);
+        // Clear the existing game board before populating it
+        super.getGameBoard().clear();
 
-            // if the row is maxed out to column size
+        // Create list of tiles per row
+        List<ConnectFourTile> rowTiles = new ArrayList<>();
+
+        // Populate the game board with the provided tiles
+        for (ConnectFourTile t : tiles) {
+            // Add a tile
+            rowTiles.add(t);
+
+            // If the row is maxed out to column size
             if (rowTiles.size() == this.getColumns()) {
-                // add row of tiles to gameBoard
+                // Add row of tiles to gameBoard
                 super.getGameBoard().add(rowTiles);
-                // empty list for new row
+                // Empty list for new row
                 rowTiles = new ArrayList<>();
             }
         }
     }
 
     @Override
-    public List<Tile> checkMatches() {
+    public List<ConnectFourTile> checkMatches() {
         // find any and all matches (horizontal, vertical, diagonal, or a mix)
-        List<Tile> matchedTiles = new ArrayList<>();
+        List<ConnectFourTile> matchedTiles = new ArrayList<>();
         for (Matchable IMatch: super.getMatches()) {
-            List<Tile> foundMatches = IMatch.match(super.getGameBoard());
+            List<ConnectFourTile> foundMatches = IMatch.match(super.getGameBoard());
             matchedTiles.addAll(foundMatches);
         }
 
@@ -95,7 +129,7 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void removeMatchedTiles(List<Tile> matchedTiles) {}
+    public void removeMatchedTiles(List<ConnectFourTile> matchedTiles) {}
 
 
 }

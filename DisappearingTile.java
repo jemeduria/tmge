@@ -4,6 +4,9 @@ public abstract class DisappearingTile extends Tile {
         super();
     }
 
+    public DisappearingTile(int r, int c) {
+        super(r, c);
+    }
 
     public abstract void disappear();
 

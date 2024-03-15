@@ -10,6 +10,11 @@ public class ConnectFourTile extends DisappearingTile {
         this.setDisplayOptions();
     }
 
+    public ConnectFourTile(int r, int c) {
+        super(r, c); // Call the parameterized constructor of the superclass
+        this.setDisplayOptions();
+    }
+
     public void setDisplayOptions() {
         this.displayOptions.add("X");
         this.displayOptions.add("O");
