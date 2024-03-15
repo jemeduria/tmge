@@ -70,5 +70,6 @@ public abstract class Game implements Endable {
     public abstract void checkMatch();
     public abstract void addPlayerPoint(List<Tile> tiles);
     public abstract boolean isGameOver();
+    public abstract boolean checkPlayerScore();
 
 }

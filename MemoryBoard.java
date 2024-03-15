@@ -121,4 +121,10 @@ public class MemoryBoard extends Board {
     @Override
     public void removeMatchedTiles(List<Tile> matchedTiles) {}
 
+    @Override
+    public boolean isFull() {
+        return true;
+    }
+
+
 }

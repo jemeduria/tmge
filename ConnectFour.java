@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConnectFour extends Game {
+public class ConnectFour extends Game implements Endable {
 
-    private Player playerTurn = null;
+    private Player playerTurn;
     private List<Player> players = new ArrayList<>();
     private final List<String> tileOptions = new ArrayList<>();
 
@@ -73,6 +73,8 @@ public class ConnectFour extends Game {
             this.takeTurn(scanner);
             gameRunning = !this.isGameOver();
         }
+
+
     }
 
     @Override
@@ -129,11 +131,10 @@ public class ConnectFour extends Game {
 
     @Override
     public void executeMove(String move) {
-        List<Tile> moves = new ArrayList<Tile>();
+        List<Tile> moves = new ArrayList<>();
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
             // return the Tile at top of the chosen column
-//            moves.add(board.getGameBoard().getFirst().get(Integer.parseInt(move)));
             moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)));
             board.execute(moves, this.getPlayerTurn());
         }
@@ -144,43 +145,84 @@ public class ConnectFour extends Game {
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
 
-            List<Tile> matches = board.checkMatches();
-            if (!matches.isEmpty()) {
-
-                // addPlayerPoint();
+            List<Tile> matches;
+            do {
+                matches = board.checkMatches();
+                this.addPlayerPoint(matches);
                 // board.removeMatchedTiles(matchedTiles);
+                // disappear
+                // drop
+            } while (!matches.isEmpty());
 
-            }
         }
     }
 
     @Override
     public void addPlayerPoint(List<Tile> tiles) {
-        //Add up the matched tiles corresspoding to the player's display.
-        //if it is over 25, Game is Over.
         for (Tile tile : tiles) {
             for (Player player : this.getPlayers()) {
                 if (tile.getDisplay().equals(player.getDisplay())) {
                     player.addPoint();
-//                    if (player.getScore() >= 25) {
-//                        System.out.println("Player " + player.getID() + " wins with 25 or more points!");
-//                        //this.isGameOver = true;
-//                        // Somehow END THE GAME
-//                        //Then What?
-                    }
                 }
-            return;
             }
         }
     }
 
+
     @Override
     public boolean isGameOver() {
-        // gameBoard.isFull();
-            //is this implemented? -> No -> Create a abstract in Game.
-        // checkPlayerScores();
-            //check player score whether it is over 25, then  return true,
-        //check whole isFull, checkPlayerSocres and if both true, return true.
-        return true;
+        ConnectFourBoard board = this.getConnectFourBoard();
+        if (!(board == null)) {
+
+            boolean isScore25 = checkPlayerScore();
+            boolean isFull = board.isFull();
+
+            return (isScore25 || isFull);
+
+        }
+
+        return true; // ERROR: board is not ConnectFourBoard type
     }
+
+    @Override
+    public boolean checkPlayerScore() {
+        // if a score is greater than 25 then game is over
+        for (Player player: this.getPlayers()) {
+            if (player.getScore() >= 25) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void end() {
+        System.out.println("GAME OVER");
+
+        List<Player> winner = this.findHighestScore();
+        if (winner.size() > 1) {
+            System.out.println("TIE");
+        }
+        System.out.println("Player " + winner.get(0).getID() + " wins!");
+    }
+
+    private List<Player> findHighestScore() {
+        List<Player> playersWithHighestScore = new ArrayList<>();
+        int highestScore = 0;
+
+        for (Player player: this.getPlayers()) {
+            if (player.getScore() > highestScore) {
+                playersWithHighestScore.clear();
+                playersWithHighestScore.add(player);
+                highestScore = player.getScore();
+            } else if (player.getScore() == highestScore) {
+                playersWithHighestScore.add(player);
+            }
+        }
+
+        return playersWithHighestScore;
+    }
+
+
+
 }
+

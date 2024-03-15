@@ -109,5 +109,10 @@ public class ConnectFourBoard extends Board {
     @Override
     public void removeMatchedTiles(List<Tile> matchedTiles) {}
 
+    @Override
+    public boolean isFull() {
+        return true;
+    }
+
 
 }
