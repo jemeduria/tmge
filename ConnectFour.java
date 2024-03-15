@@ -21,7 +21,7 @@ public class ConnectFour extends Game {
         // initialize players
         this.players.add(new Player(1, this.tileOptions.get(0)));
         this.players.add(new Player(2, this.tileOptions.get(1)));
-        this.playerTurn =  this.players.get(1);
+        this.playerTurn = this.players.get(1);
     }
 
     public Player getPlayerTurn() {
@@ -153,6 +153,7 @@ public class ConnectFour extends Game {
             }
         }
     }
+
     @Override
     public void addPlayerPoint(List<Tile> tiles) {
         //Add up the matched tiles corresspoding to the player's display.
@@ -161,13 +162,14 @@ public class ConnectFour extends Game {
             for (Player player : this.getPlayers()) {
                 if (tile.getDisplay().equals(player.getDisplay())) {
                     player.addPoint();
-                    if (player.getScore() >= 25) {
-                        System.out.println("Player " + player.getID() + " wins with 25 or more points!");
-//                        this.isGameOver = true;
-//                       Somehow END THE GAME
-                        return;
+//                    if (player.getScore() >= 25) {
+//                        System.out.println("Player " + player.getID() + " wins with 25 or more points!");
+//                        //this.isGameOver = true;
+//                        // Somehow END THE GAME
+//                        //Then What?
                     }
                 }
+            return;
             }
         }
     }
@@ -175,8 +177,10 @@ public class ConnectFour extends Game {
     @Override
     public boolean isGameOver() {
         // gameBoard.isFull();
+            //is this implemented? -> No -> Create a abstract in Game.
         // checkPlayerScores();
+            //check player score whether it is over 25, then  return true,
+        //check whole isFull, checkPlayerSocres and if both true, return true.
         return true;
     }
-
 }
