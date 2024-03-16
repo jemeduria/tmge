@@ -52,7 +52,17 @@ public class MemoryBoard extends Board {
     }
 
     @Override
-    public void execute(List<Tile> tiles, Player player) {}
+    public void execute(List<Tile> tiles, Player player) {
+        for (Tile tile: tiles) {
+            if (tile instanceof MemoryTile memTile) {
+                memTile.showValue();
+            }
+        }
+        super.display();
+
+
+
+    }
 
     @Override
     public List<Tile> createBoardTiles() {
@@ -112,10 +122,31 @@ public class MemoryBoard extends Board {
     }
 
     @Override
-    public void removeMatchedTiles(List<Tile> matchedTiles) {}
+    public void removeMatchedTiles(List<Tile> matchedTiles) {
+        List<DisappearingTile> disappearingTiles = new ArrayList<>();
+        for (Tile tile : matchedTiles) {
+            if (tile instanceof DisappearingTile dTile) {
+                disappearingTiles.add(dTile);
+            }
+        }
+
+        // only one type of disappearing
+        for (Disappearable IDisappear : super.getDisappearTypes()) {
+            IDisappear.disappear(disappearingTiles, super.getGameBoard());
+        }
+    }
 
     @Override
     public boolean isFull() {
+        // not really isFull, more like isAllMatched or isAllX
+        List<List<Tile>> gameBoard = super.getGameBoard();
+        for (List<Tile> row : gameBoard) {
+            for (Tile tile : row) {
+                if (!(tile.getDisplay().equals("X"))) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

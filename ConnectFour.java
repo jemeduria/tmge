@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class ConnectFour extends Game implements Endable {
 
     private Player playerTurn;
-    private List<Player> players = new ArrayList<>();
     private final List<String> tileOptions = new ArrayList<>();
 
     public ConnectFour() {
@@ -19,9 +18,9 @@ public class ConnectFour extends Game implements Endable {
         super.setGameBoard(new ConnectFourBoard());
 
         // initialize players
-        this.players.add(new Player(1, this.tileOptions.get(0)));
-        this.players.add(new Player(2, this.tileOptions.get(1)));
-        this.playerTurn = this.players.get(1);
+        super.getPlayers().add(new Player(1, this.tileOptions.get(0)));
+        super.getPlayers().add(new Player(2, this.tileOptions.get(1)));
+        this.playerTurn =  super.getPlayers().get(1);
     }
 
     public Player getPlayerTurn() {
@@ -30,14 +29,6 @@ public class ConnectFour extends Game implements Endable {
 
     public void setPlayerTurn(Player playerTurn) {
         this.playerTurn = playerTurn;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public List<String> getTileOptions() {
@@ -53,9 +44,9 @@ public class ConnectFour extends Game implements Endable {
     }
 
     private void switchPlayer() {
-        int currentPlayerID = (this.getPlayerTurn().getID() % this.getPlayers().size()) + 1;
+        int currentPlayerID = (this.getPlayerTurn().getID() % super.getPlayers().size()) + 1;
 
-        for (Player player : this.getPlayers()) {
+        for (Player player : super.getPlayers()) {
             if (player.getID() == currentPlayerID) {
                 this.setPlayerTurn(player);
                 break;
@@ -66,6 +57,7 @@ public class ConnectFour extends Game implements Endable {
     @Override
     public void gameLoop(Scanner scanner) {
         System.out.println("Please determine who will play Player 1 and Player 2.");
+        System.out.println("First to match all at least 25 tiles wins!");
 
         boolean gameRunning = true;
         while (gameRunning) {
@@ -73,8 +65,7 @@ public class ConnectFour extends Game implements Endable {
             this.takeTurn(scanner);
             gameRunning = !this.isGameOver();
         }
-
-
+        end();
     }
 
     @Override
@@ -162,7 +153,7 @@ public class ConnectFour extends Game implements Endable {
     @Override
     public void addPlayerPoint(List<Tile> tiles) {
         for (Tile tile : tiles) {
-            for (Player player : this.getPlayers()) {
+            for (Player player : super.getPlayers()) {
                 if (tile.getDisplay().equals(player.getDisplay())) {
                     player.addPoint();
                 }
@@ -188,8 +179,8 @@ public class ConnectFour extends Game implements Endable {
 
     @Override
     public boolean checkPlayerScore() {
-        // if a score is greater than 25 then game is over
-        for (Player player: this.getPlayers()) {
+        // if a score is greater than or equal to 25 then game is over = winner found
+        for (Player player: super.getPlayers()) {
             if (player.getScore() >= 25) {
                 return true;
             }
@@ -211,7 +202,7 @@ public class ConnectFour extends Game implements Endable {
         List<Player> playersWithHighestScore = new ArrayList<>();
         int highestScore = 0;
 
-        for (Player player: this.getPlayers()) {
+        for (Player player: super.getPlayers()) {
             if (player.getScore() > highestScore) {
                 playersWithHighestScore.clear();
                 playersWithHighestScore.add(player);

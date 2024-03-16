@@ -7,7 +7,6 @@ public class Memory extends Game implements Endable {
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
     private final List<Integer> numOptions = new ArrayList<>();
-    private final Player player = new Player(1, null);
 
     public Memory() {
         super();
@@ -15,6 +14,7 @@ public class Memory extends Game implements Endable {
             this.numOptions.add(i);
         }
         super.setGameBoard(new MemoryBoard(this.numOptions));
+        super.getPlayers().add(new Player(1, null));
         
     }
 
@@ -30,10 +30,6 @@ public class Memory extends Game implements Endable {
         return numOptions;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     private MemoryBoard getMemoryBoard() {
         if (super.getGameBoard() instanceof MemoryBoard) {
             return (MemoryBoard) super.getGameBoard();
@@ -43,17 +39,16 @@ public class Memory extends Game implements Endable {
 
     @Override
     public void gameLoop(Scanner scanner) {
+        System.out.println("You have 3 lives.");
+        System.out.println("You loose a life if you mis-match two tiles.");
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
-
-            // loop here
+            // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
-
             gameIsOver = isGameOver();
         }
-
-
+        end();
     }
 
     @Override
@@ -145,12 +140,24 @@ public class Memory extends Game implements Endable {
                 moves.add(board.getGameBoard().get(row).get(col));
             }
 
-            board.execute(moves, this.getPlayer());
+            board.execute(moves, super.getPlayers().get(0));
         }
     }
 
     @Override
-    public void checkMatch() {}
+    public void checkMatch() {
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+
+            List<Tile> matches = board.checkMatches();
+            if (matches != null) {
+                this.addPlayerPoint(matches);
+
+                // make the Tiles disappear
+                board.removeMatchedTiles(matches);
+            }
+        }
+    }
 
     @Override
     public void addPlayerPoint(List<Tile> tiles) {
@@ -161,21 +168,28 @@ public class Memory extends Game implements Endable {
 
     @Override
     public boolean isGameOver() {
-        for(int i = 0; i < this.getMemoryBoard().getRows(); i++) {
-            for(int j = 0; j < this.getMemoryBoard().getColumns(); j++) {
-                if(!this.getMemoryBoard().getGameBoard().get(i).get(j).equals("X")) {
-                    return false;
-                }
-            }
+
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+
+            boolean noLivesLeft = checkPlayerScore();
+            boolean allMatched = board.isFull();
+
+            return (noLivesLeft || allMatched);
+
         }
-        return true;
+
+        return true; // ERROR: board is not ConnectFourBoard type
     }
 
     @Override
     public boolean checkPlayerScore() {
-        return true;
+        // if a score is greater than or equal to 3 then game is over = all 3 lives are lost
+        return (super.getPlayers().get(0).getScore() >= 3);
     }
 
-    public void end() {}
+    public void end() {
+        System.out.println("GAME OVER");
+    }
 
 }
