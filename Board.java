@@ -5,9 +5,12 @@ public abstract class Board {
 	private final List<List<Tile>> gameBoard;
 	private final List<Matchable> matches;
 
+	private final List<Disappearable> disappearTypes;
+
 	public Board() {
 		this.gameBoard = new ArrayList<>();
 		this.matches = new ArrayList<>();
+		this.disappearTypes = new ArrayList<>();
 	}
 
 	public List<List<Tile>> getGameBoard() {
@@ -17,7 +20,12 @@ public abstract class Board {
 		return this.matches;
 	}
 
+	public List<Disappearable> getDisappearTypes() {
+		return this.disappearTypes;
+	}
+
 	public abstract void addMatches();
+	public abstract void addDisappearTypes();
 	public abstract boolean isValidMove(String move);
 	public abstract void execute(List<Tile> tiles, Player player);
 	public abstract List<Tile> createBoardTiles();

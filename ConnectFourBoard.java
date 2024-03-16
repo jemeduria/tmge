@@ -9,7 +9,8 @@ public class ConnectFourBoard extends Board {
     public ConnectFourBoard() {
         super();
         this.addMatches();
-        this.createBoardGame(new ArrayList<>()); // placeholder input
+        this.addDisappearTypes();
+        this.createBoardGame(this.createBoardTiles());
     }
 
     public int getRows() {
@@ -28,9 +29,13 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
+    public void addDisappearTypes() {
+        super.getDisappearTypes().add(new SimpleDisappear());
+    }
+
+    @Override
     public boolean isValidMove(String move) {
         // check if column is free (there is at least one available space at the top in that column)
-//        if (super.getGameBoard().getFirst().get(Integer.parseInt(move)-1).getDisplay() == null) {
         if (super.getGameBoard().get(0).get(Integer.parseInt(move)-1).getDisplay() == null) {
             return true;
         } else {
@@ -72,9 +77,6 @@ public class ConnectFourBoard extends Board {
 
     @Override
     public void createBoardGame(List<Tile> tiles) {
-        // Clear the existing game board before populating it
-        super.getGameBoard().clear();
-
         // Create list of tiles per row
         List<Tile> rowTiles = new ArrayList<>();
 
@@ -107,10 +109,39 @@ public class ConnectFourBoard extends Board {
     }
 
     @Override
-    public void removeMatchedTiles(List<Tile> matchedTiles) {}
+    public void removeMatchedTiles(List<Tile> matchedTiles) {
+        List<DisappearingTile> disappearingTiles = new ArrayList<>();
+        for (Tile tile : matchedTiles) {
+            if (tile instanceof DisappearingTile dTile) {
+                disappearingTiles.add(dTile);
+            }
+        }
+
+        // only one type of disappearing
+        for (Disappearable IDisappear : super.getDisappearTypes()) {
+            IDisappear.disappear(disappearingTiles, super.getGameBoard());
+        }
+
+        // drop the tiles
+        this.dropTiles(disappearingTiles);
+
+    }
+
+    private void dropTiles(List<DisappearingTile> disappearingTiles) {
+        // order Tiles by highest row numbers first
+        // algorithm to swap display to top
+    }
 
     @Override
     public boolean isFull() {
+        List<List<Tile>> gameBoard = super.getGameBoard();
+        for (List<Tile> row : gameBoard) {
+            for (Tile tile : row) {
+                if (tile.getDisplay() == null) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

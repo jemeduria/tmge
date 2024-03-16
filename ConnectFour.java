@@ -152,9 +152,7 @@ public class ConnectFour extends Game implements Endable {
                 this.addPlayerPoint(matches);
 
                 // make the Tiles disappear
-                // board.removeMatchedTiles(matchedTiles);
-                // board.dropTiles(matchedTiles);
-
+                board.removeMatchedTiles(matches);
 
             } while (!matches.isEmpty());
 

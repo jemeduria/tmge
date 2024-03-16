@@ -11,14 +11,19 @@ public class MemoryBoard extends Board {
 
     public MemoryBoard(List<Integer> numOptions) {
         super();
-        this.addMatches();
         this.numOptions = numOptions;
-
+        this.addMatches();
+        this.addDisappearTypes();
         this.createBoardGame(this.createBoardTiles());
     }
     @Override
     public void addMatches() {
         super.getMatches().add(new SameTileMatch());
+    }
+
+    @Override
+    public void addDisappearTypes() {
+        super.getDisappearTypes().add(new SimpleDisappear());
     }
 
     public int getRows() {
@@ -35,24 +40,15 @@ public class MemoryBoard extends Board {
 
     @Override
     public boolean isValidMove(String move) {
-    	String pattern = "\\d+\\s\\d+";
-    	if(move.matches(pattern)) {
-    		String[] parts = move.split(" ");
-            try 
-            {
-                int row = Integer.parseInt(parts[0]);
-                int col = Integer.parseInt(parts[1]);
-                if(0 <= row && row <= 4 && col < 5 && col >= 0) {
-                	if(!super.getGameBoard().get(row).get(col).getDisplay().equals("X"))
-                		return true;
-                }
-                return false;
-                
-            } catch (NumberFormatException e) {
-                return false;
-            }
-    	}
-        return false;
+        // move = <ROW> <COLUMN>
+        String[] parts = move.split(" ");
+        int row = Integer.parseInt(parts[0]);
+        int col = Integer.parseInt(parts[0]);
+
+        // return false if tile has "disappeared" or if tile has been "matched" already
+        // return true if match has not been found yet
+        return super.getGameBoard().get(row).get(col).getDisplay() == null;
+
     }
 
     @Override
@@ -85,9 +81,6 @@ public class MemoryBoard extends Board {
 
     @Override
     public void createBoardGame(List<Tile> tiles) {
-        // Clear the existing game board before populating it
-        super.getGameBoard().clear();
-
         // create list of tiles per row
         List<Tile> rowTiles = new ArrayList<>();
 

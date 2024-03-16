@@ -7,6 +7,8 @@ public class Memory extends Game implements Endable {
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
     private final List<Integer> numOptions = new ArrayList<>();
+    private final Player player = new Player(1, null);
+
     public Memory() {
         super();
         for (int i=this.minNumTile; i<=this.maxNumTile; i++) {
@@ -28,6 +30,10 @@ public class Memory extends Game implements Endable {
         return numOptions;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     private MemoryBoard getMemoryBoard() {
         if (super.getGameBoard() instanceof MemoryBoard) {
             return (MemoryBoard) super.getGameBoard();
@@ -40,42 +46,106 @@ public class Memory extends Game implements Endable {
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
-            if (isGameOver()) {
-                gameIsOver = true;
-            }
+
+            // loop here
+            this.takeTurn(scanner);
+
+            gameIsOver = isGameOver();
         }
+
 
     }
 
     @Override
     public void takeTurn(Scanner scanner) {
-        String move = getMove(scanner);
+        // announce turn
+        System.out.println("    Enter two Tiles to check match.");
+
+        // get move from user + check validity
+        String move = this.getMove(scanner);
+
+        // do the move
+        this.executeMove(move);
+
+        // check for matches & update status of game
+        this.checkMatch();
 
     }
 
     @Override
     public String getMove(Scanner scanner) {
-    	String move;
-    	do {
-    		System.out.println("Enter the position of your choice in this format <Row Number><Space><Column Number>");
-    		move = scanner.nextLine();
-    	}
-    	while(!this.getMemoryBoard().isValidMove(move));
-        return move;
+        MemoryBoard board = getMemoryBoard();
+        if (!(board == null)) {
+
+            // allow user to pick two tiles to match together
+            String tile1 = null;
+            String tile2 = null;
+
+            boolean pickedTwo = false;
+            while (!pickedTwo) {
+                String tile;
+                do {
+                    if (tile1 == null) {
+                        System.out.println("Choose your FIRST tile.");
+                    } else {
+                        System.out.println("Choose your SECOND tile.");
+                    }
+                    // tile = <ROW> <COLUMN>
+                    tile = this.choose(scanner);
+                }
+                while (!board.isValidMove(tile));
+
+                // ensure both tiles have been picked
+                if (tile1 == null) {
+                    tile1 = tile;
+                } else {
+                    tile2 = tile;
+                    pickedTwo = true;
+                }
+            }
+
+            // the whole move is a String "<tile1ROW> <tile2COLUMN>,<tile2ROW> <tile2COLUMN>"
+            return tile1 + "," + tile2;
+        }
+        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
     }
 
     @Override
     public String choose(Scanner scanner) {
-        return "";
+        // ensures that the chosen move is a valid column number
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+            int maxColumns = board.getColumns();
+            int minColumns = 1;
+            int maxRows = board.getRows();
+            int minRows = 1;
+
+            int tileRow = super.parseNumber(scanner, "Enter the ROW number of your choice: ", minRows, maxRows);
+            int tileColumn = super.parseNumber(scanner, "Enter the COLUMN number of your choice: ", minColumns, maxColumns);
+            return String.valueOf(tileRow) + " " + String.valueOf(tileColumn);
+        }
+        return null; // MAJOR ISSUE IF THIS CODE IS REACHED
     }
 
     @Override
     public void executeMove(String move) {
-        String[] moves = move.split(" ");
+        // move = "<tile1ROW> <tile2COLUMN>,<tile2ROW> <tile2COLUMN>"
+        String[] chosenTiles = move.split(",");
+        List<Tile> moves = new ArrayList<>();
+
         MemoryBoard board = this.getMemoryBoard();
         if (!(board == null)) {
-            //moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)));
-            
+
+            // parse choices into moves
+            for (String chosenTile : chosenTiles) {
+                // chosenTile = "<tile1ROW> <tile2COLUMN>
+                String[] parts = move.split(" ");
+                int row = Integer.parseInt(parts[0]);
+                int col = Integer.parseInt(parts[0]);
+                moves.add(board.getGameBoard().get(row).get(col));
+            }
+
+            board.execute(moves, this.getPlayer());
         }
     }
 
