@@ -65,6 +65,9 @@ public class Memory extends Game implements Endable {
         // check for matches & update status of game
         this.checkMatch();
 
+        // hide all tiles that are not "X" for next turn
+        this.hideMatchedTiles();
+
     }
 
     @Override
@@ -190,6 +193,24 @@ public class Memory extends Game implements Endable {
 
     public void end() {
         System.out.println("GAME OVER");
+    }
+
+    private void hideMatchedTiles() {
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+
+            for (List<Tile> row : board.getGameBoard()) {
+                for (Tile tile : row) {
+                    if (!tile.getDisplay().equals("X")) {
+                        if (tile instanceof MemoryTile memTile) {
+                            memTile.hideValue();
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 
 }

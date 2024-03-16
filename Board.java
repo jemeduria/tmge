@@ -24,6 +24,10 @@ public abstract class Board {
 		return this.disappearTypes;
 	}
 
+	public void display() {
+		;
+	}
+
 	public abstract void addMatches();
 	public abstract void addDisappearTypes();
 	public abstract boolean isValidMove(String move);
