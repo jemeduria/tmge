@@ -61,7 +61,7 @@ public class Memory extends Game implements Endable {
         // announce turn
         System.out.println("    Enter two Tiles to check match.");
 
-        // get move from user + check validity
+        // get moves from user + check validity
         String move = this.getMove(scanner);
 
         // do the move
@@ -140,8 +140,8 @@ public class Memory extends Game implements Endable {
             for (String chosenTile : chosenTiles) {
                 // chosenTile = "<tile1ROW> <tile2COLUMN>
                 String[] parts = move.split(" ");
-                int row = Integer.parseInt(parts[0]);
-                int col = Integer.parseInt(parts[0]);
+                int row = Integer.parseInt(parts[0])-1;
+                int col = Integer.parseInt(parts[0])-1;
                 moves.add(board.getGameBoard().get(row).get(col));
             }
 

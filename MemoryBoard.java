@@ -42,8 +42,8 @@ public class MemoryBoard extends Board {
     public boolean isValidMove(String move) {
         // move = <ROW> <COLUMN>
         String[] parts = move.split(" ");
-        int row = Integer.parseInt(parts[0]);
-        int col = Integer.parseInt(parts[0]);
+        int row = Integer.parseInt(parts[0])-1;
+        int col = Integer.parseInt(parts[0])-1;
 
         // return false if tile has "disappeared" or if tile has been "matched" already
         // return true if match has not been found yet
