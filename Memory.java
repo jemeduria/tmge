@@ -47,6 +47,7 @@ public class Memory extends Game implements Endable {
             // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
             gameIsOver = isGameOver();
+
         }
         end();
     }
@@ -102,7 +103,7 @@ public class Memory extends Game implements Endable {
                 }
             }
 
-            // the whole move is a String "<tile1ROW> <tile2COLUMN>,<tile2ROW> <tile2COLUMN>"
+            // the whole move is a String "<tile1ROW> <tile1COLUMN>,<tile2ROW> <tile2COLUMN>"
             return tile1 + "," + tile2;
         }
         return null; // MAJOR ISSUE IF THIS CODE IS REACHED
@@ -154,8 +155,6 @@ public class Memory extends Game implements Endable {
 
             List<Tile> matches = board.checkMatches();
             if (matches != null) {
-                this.addPlayerPoint(matches);
-
                 // make the Tiles disappear
                 board.removeMatchedTiles(matches);
             }
@@ -164,9 +163,7 @@ public class Memory extends Game implements Endable {
 
     @Override
     public void addPlayerPoint(List<Tile> tiles) {
-        if (tiles != null) {
-            this.getPlayers().get(0).addPoint();
-        }
+        this.getPlayers().get(0).addPoint();
     }
 
     @Override

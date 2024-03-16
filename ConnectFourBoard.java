@@ -128,7 +128,8 @@ public class ConnectFourBoard extends Board {
     }
 
     private void dropTiles(List<DisappearingTile> disappearingTiles) {
-        // order Tiles by highest row numbers first
+
+        // order Tiles by highest row (lowest row number) first
         // algorithm to swap display to top
     }
 
