@@ -103,6 +103,7 @@ public class Memory extends Game implements Endable {
 
         // do the move
         this.executeMove(move);
+        super.display();
 
         // check for matches & update status of game
         this.checkMatch();
@@ -198,6 +199,8 @@ public class Memory extends Game implements Endable {
             if (matches != null) {
                 // make the Tiles disappear
                 board.removeMatchedTiles(matches);
+            } else {
+                this.addPlayerPoint(null);
             }
         }
     }

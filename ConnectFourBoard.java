@@ -129,9 +129,42 @@ public class ConnectFourBoard extends Board {
     }
 
     private void dropTiles(List<DisappearingTile> disappearingTiles) {
-
         // order Tiles by highest row (lowest row number) first
+        List<DisappearingTile> orderedTiles = new ArrayList<>();
+        for (int i=0; i<this.getRows(); i++) {
+            for (DisappearingTile tile: disappearingTiles) {
+                if (tile.getRow() == i) {
+                    orderedTiles.add(tile);
+                }
+            }
+        }
+
         // algorithm to swap display to top
+        for (DisappearingTile tile: orderedTiles) {
+            this.drop((Tile) tile);
+        }
+
+    }
+
+    private void drop(Tile tile) {
+        int row = tile.getRow();
+        int column = tile.getColumn();
+
+        // start from the current row and move upwards
+        for (int currentRow = row; currentRow > 0; currentRow--) {
+            Tile currentTile = super.getGameBoard().get(currentRow).get(column);
+            Tile aboveTile = super.getGameBoard().get(currentRow - 1).get(column);
+
+            // swap null tile to one above
+            if (aboveTile.getDisplay() != null) {
+                String tempDisplay = currentTile.getDisplay();
+                currentTile.setDisplay(aboveTile.getDisplay());
+                aboveTile.setDisplay(tempDisplay);
+            } else {
+                return;
+            }
+        }
+
     }
 
     @Override
