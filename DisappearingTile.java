@@ -1,15 +1,9 @@
 public abstract class DisappearingTile extends Tile {
 
-    public DisappearingTile() {
-        super();
-    }
-
-    public DisappearingTile(int r, int c) {
-        super(r, c);
+    public DisappearingTile(int row, int column) {
+        super(row, column);
     }
 
     public abstract void disappear();
-
-    public abstract void addTileDisplay(String display);
 
 }

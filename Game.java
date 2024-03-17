@@ -14,27 +14,17 @@ public abstract class Game implements Endable {
     public Board getGameBoard() {
         return this.gameBoard;
     }
-
     public void setGameBoard(Board gameBoard) {
         this.gameBoard = gameBoard;
     }
-
     public List<Player> getPlayers() {
         return players;
     }
-
     public Tile getChosenTile() {
         return chosenTile;
     }
-
     public void setChosenTile(Tile chosenTile) {
         this.chosenTile = chosenTile;
-    }
-
-    public boolean end(boolean endGame) {
-        // should we remove Endable? if we have a gameLoop that runs on a condition,
-        // there might not be any point of keeping this?
-        return endGame;
     }
 
     public int parseNumber(Scanner scanner, String prompt, int minChoices, int maxChoices) {
@@ -62,6 +52,35 @@ public abstract class Game implements Endable {
         return scanner.nextLine();
     }
 
+    public void display() {
+        System.out.println("Rows are displayed on the LEFT side of the board (displayed vertically).");
+        System.out.println("Columns are displayed on the TOP of the board (displayed horizontally).\n");
+
+        int rows = this.getGameBoard().getGameBoard().size();
+        int columns = this.getGameBoard().getGameBoard().get(0).size();
+
+        System.out.print("   ");
+        for (int colNum=1; colNum<=columns; colNum++) {
+            System.out.print(" " + colNum + " ");
+        }
+
+        for (int rowNum=1; rowNum<=rows; rowNum++) {
+            System.out.print(rowNum + "  ");
+
+            for (int colNum=1; colNum<=columns; colNum++) {
+                String display = this.getGameBoard().getGameBoard().get(rowNum-1).get(colNum-1).printDisplay();
+                System.out.println("[" + display + "]");
+            }
+        }
+
+        System.out.println();
+
+        // System.out.println("    1  2  3  4 ");
+        // System.out.println("1  [ ][ ][ ][ ]");
+        // System.out.println("2  [ ][ ][ ][ ]");
+        // System.out.println("3  [ ][ ][ ][ ]");
+    }
+
     public abstract void gameLoop(Scanner scanner);
     public abstract void takeTurn(Scanner scanner);
     public abstract String getMove(Scanner scanner);
@@ -71,5 +90,6 @@ public abstract class Game implements Endable {
     public abstract void addPlayerPoint(List<Tile> tiles);
     public abstract boolean isGameOver();
     public abstract boolean checkPlayerScore();
+    public abstract void end();
 
 }

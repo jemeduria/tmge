@@ -7,8 +7,9 @@ public class MemoryTile extends DisappearingTile {
     
     public MemoryTile(List<Integer> tileOptions, int row, int col, int val) {
     	super(row, col);
-    	this.value = val;
         this.setDisplayOptions(tileOptions);
+
+        this.value = val;
     }
 
     public int getValue() {
@@ -20,14 +21,6 @@ public class MemoryTile extends DisappearingTile {
             this.displayOptions.add(num.toString());
         }
         this.displayOptions.add("X"); // for already "picked" Memory Tiles
-    }
-
-    public String printDisplay() {
-        if (super.getDisplay() == null) {
-            return " ";
-        } else {
-            return this.getDisplay();
-        }
     }
 
     public void disappear() {

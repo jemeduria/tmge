@@ -5,9 +5,11 @@ public class ConnectFourBoard extends Board {
 
     private final int rows = 6;
     private final int columns = 7;
+    private final List<String> tileOptions;
 
-    public ConnectFourBoard() {
+    public ConnectFourBoard(List<String> tileOptions) {
         super();
+        this.tileOptions = tileOptions;
         this.addMatches();
         this.addDisappearTypes();
         this.createBoardGame(this.createBoardTiles());
@@ -67,8 +69,7 @@ public class ConnectFourBoard extends Board {
         // Create and add tiles to the list based on the number of rows and columns
         for (int row = 0; row < this.getRows(); row++) {
             for (int col = 0; col < this.getColumns(); col++) {
-                Tile tile = new ConnectFourTile(row, col);
-                tiles.add(tile);
+                tiles.add(new ConnectFourTile(tileOptions, row, col));
             }
         }
 

@@ -1,14 +1,8 @@
 public abstract class Tile {
     private int row;
     private int column;
-
     private String display = null;
 
-    // default constructor
-    public Tile() {
-    }
-
-    // parameterized constructor
     public Tile(int r, int c) {
         this.row = r;
         this.column = c;
@@ -36,6 +30,14 @@ public abstract class Tile {
 
     public void setDisplay(String display) {
         this.display = display;
+    }
+
+    public String printDisplay() {
+        if (this.getDisplay() == null) {
+            return " ";
+        } else {
+            return this.getDisplay();
+        }
     }
 
 }

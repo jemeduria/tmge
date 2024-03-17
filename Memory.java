@@ -10,22 +10,25 @@ public class Memory extends Game implements Endable {
 
     public Memory() {
         super();
+
+        // initialize tile options
         for (int i=this.minNumTile; i<=this.maxNumTile; i++) {
             this.numOptions.add(i);
         }
+
+        // initialize board
         super.setGameBoard(new MemoryBoard(this.numOptions));
+
+        // initialize players
         super.getPlayers().add(new Player(1, null));
-        
     }
 
     public int getMinNumTile() {
         return minNumTile;
     }
-
     public int getMaxNumTile() {
         return maxNumTile;
     }
-
     public List<Integer> getNumOptions() {
         return numOptions;
     }
@@ -44,12 +47,12 @@ public class Memory extends Game implements Endable {
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
+            super.display();
             // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
             gameIsOver = isGameOver();
-
         }
-        end();
+        this.end();
     }
 
     @Override
@@ -188,6 +191,7 @@ public class Memory extends Game implements Endable {
         return (super.getPlayers().get(0).getScore() >= 3);
     }
 
+    @Override
     public void end() {
         System.out.println("GAME OVER");
     }

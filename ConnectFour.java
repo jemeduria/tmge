@@ -9,13 +9,13 @@ public class ConnectFour extends Game implements Endable {
 
     public ConnectFour() {
         super();
-        // fix?? : duplicate code in ConnectFourTile.java
+
         // initialize tile options
         this.tileOptions.add("X");
         this.tileOptions.add("O");
 
         // initialize board
-        super.setGameBoard(new ConnectFourBoard());
+        super.setGameBoard(new ConnectFourBoard(this.tileOptions));
 
         // initialize players
         super.getPlayers().add(new Player(1, this.tileOptions.get(0)));
@@ -26,11 +26,9 @@ public class ConnectFour extends Game implements Endable {
     public Player getPlayerTurn() {
         return playerTurn;
     }
-
     public void setPlayerTurn(Player playerTurn) {
         this.playerTurn = playerTurn;
     }
-
     public List<String> getTileOptions() {
         return tileOptions;
     }
@@ -62,10 +60,11 @@ public class ConnectFour extends Game implements Endable {
         boolean gameRunning = true;
         while (gameRunning) {
             this.switchPlayer();
+            super.display();
             this.takeTurn(scanner);
             gameRunning = !this.isGameOver();
         }
-        end();
+        this.end();
     }
 
     @Override
@@ -188,6 +187,7 @@ public class ConnectFour extends Game implements Endable {
         return false;
     }
 
+    @Override
     public void end() {
         System.out.println("GAME OVER");
 

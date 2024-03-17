@@ -5,28 +5,13 @@ public class ConnectFourTile extends DisappearingTile {
 
     private final List<String> displayOptions = new ArrayList<String>();
 
-    public ConnectFourTile() {
-        super();
-        this.setDisplayOptions();
+    public ConnectFourTile(List<String> tileOptions, int row, int column) {
+        super(row, column);
+        this.setDisplayOptions(tileOptions);
     }
 
-    public ConnectFourTile(int r, int c) {
-        super(r, c); // Call the parameterized constructor of the superclass
-        this.setDisplayOptions();
-    }
-
-    public void setDisplayOptions() {
-        this.displayOptions.add("X");
-        this.displayOptions.add("O");
-    }
-
-
-    public String printDisplay() {
-        if (super.getDisplay() == null) {
-            return " ";
-        } else {
-            return this.getDisplay();
-        }
+    public void setDisplayOptions(List<String> tileOptions) {
+        this.displayOptions.addAll(tileOptions);
     }
 
     public void disappear() {
