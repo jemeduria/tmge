@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 public class Memory extends Game implements Endable {
+    private ExecutorService executorService;
 
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
@@ -50,10 +52,46 @@ public class Memory extends Game implements Endable {
             super.display();
             // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
+            // if takeTurn() not finished running fully by 10 seconds
+            // this.addPlayerPoint(null);
             gameIsOver = isGameOver();
         }
         this.end();
     }
+
+//    @Override
+//    public void gameLoop(Scanner scanner) {
+//        System.out.println("You have 3 lives.");
+//        System.out.println("You lose a life if you mis-match two tiles.");
+//
+//        executorService = Executors.newSingleThreadExecutor();
+//
+//        boolean gameIsOver = false;
+//        while (!gameIsOver) {
+//            super.display();
+//
+//            // Start a new thread to monitor turn time
+//            Future<?> future = executorService.submit(() -> {
+//                this.takeTurn(scanner);
+//            });
+//
+//            try {
+//                // Wait for the turn to finish or timeout after 10 seconds
+//                future.get(10, TimeUnit.SECONDS);
+//            } catch (TimeoutException e) {
+//                // Turn took longer than 10 seconds
+//                System.out.println("Your turn took too long. You lose a life.");
+//                this.addPlayerPoint(null); // Assuming this method handles losing a life
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//
+//            gameIsOver = isGameOver();
+//        }
+//
+//        this.end();
+//        executorService.shutdown();
+//    }
 
     @Override
     public void takeTurn(Scanner scanner) {
