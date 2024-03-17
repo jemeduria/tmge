@@ -18,8 +18,5 @@ public class ConnectFourTile extends DisappearingTile {
         super.setDisplay(null);
     }
 
-    public void addTileDisplay(String display) {
-        super.setDisplay(display);
-    }
 
 }
