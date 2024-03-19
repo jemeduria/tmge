@@ -54,8 +54,11 @@ public class ConnectFour extends Game implements Endable {
 
     @Override
     public void gameLoop(Scanner scanner) {
-        System.out.println("Please determine who will play Player 1 and Player 2.");
-        System.out.println("First to match all at least 25 tiles wins!");
+        System.out.println("CONNECT FOUR RULES");
+        System.out.println("     1. First player to match 25 tiles (or more) wins!");
+        System.out.println("     2. Matches exists with 4 (or more) tiles in a row.");
+        System.out.println("     3. Matches can be diagonal, horizontal, and vertical.");
+        System.out.println("     4. Please determine who will play Player 1 and Player 2 amongst yourselves.\n");
 
         boolean gameRunning = true;
         while (gameRunning) {
@@ -69,11 +72,16 @@ public class ConnectFour extends Game implements Endable {
 
     @Override
     public void takeTurn(Scanner scanner) {
+        // announce scores
+        for (Player player : super.getPlayers()) {
+            System.out.println("PLAYER " + player.getID() + " SCORE: " + player.getScore());
+        }
+
         // announce turn
-        System.out.println("    Player "
+        System.out.println("\nPLAYER "
                 + this.getPlayerTurn().getID()
-                + ", place down a "
-                + this.getPlayerTurn().getDisplay());
+                + ", place down a tile ["
+                + this.getPlayerTurn().getDisplay() + "]");
 
         // get move from user + check validity
         String move = this.getMove(scanner);
@@ -125,7 +133,7 @@ public class ConnectFour extends Game implements Endable {
         ConnectFourBoard board = this.getConnectFourBoard();
         if (!(board == null)) {
             // return the Tile at top of the chosen column
-            moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)));
+            moves.add(board.getGameBoard().get(0).get(Integer.parseInt(move)-1));
             board.execute(moves, this.getPlayerTurn());
         }
     }
@@ -139,12 +147,16 @@ public class ConnectFour extends Game implements Endable {
             do {
                 // match the tiles
                 matches = board.checkMatches();
-                this.addPlayerPoint(matches);
 
-                // make the Tiles disappear
-                board.removeMatchedTiles(matches);
+                if (matches != null) {
+                    // add points to the players
+                    this.addPlayerPoint(matches);
 
-            } while (!matches.isEmpty());
+                    // make the Tiles disappear
+                    board.removeMatchedTiles(matches);
+                }
+
+            } while (matches != null);
 
         }
     }
@@ -189,13 +201,16 @@ public class ConnectFour extends Game implements Endable {
 
     @Override
     public void end() {
-        System.out.println("GAME OVER");
+        System.out.println("\n===================================================\n");
+        System.out.println("CONNECT FOUR: GAME OVER");
 
         List<Player> winner = this.findHighestScore();
         if (winner.size() > 1) {
-            System.out.println("TIE");
+            System.out.println("TIE!");
+            System.out.println("Score :" + winner.get(0).getScore() + "\n");
         }
-        System.out.println("Player " + winner.get(0).getID() + " wins!");
+        System.out.println("PLAYER " + winner.get(0).getID() + " WINS!");
+        System.out.println("Score :" + winner.get(0).getScore() + "\n");
     }
 
     private List<Player> findHighestScore() {

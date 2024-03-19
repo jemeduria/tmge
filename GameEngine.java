@@ -21,7 +21,7 @@ public class GameEngine {
         boolean isValidInput = false;
 
         do {
-            String chosenGame = getUserInput(">> Choose a game: ");
+            String chosenGame = getUserInput("Choose an option: ");
             try {
                 inputNum = Integer.parseInt(chosenGame);
                 isValidInput = inputNum <= maxChoices && inputNum >= minChoices;
@@ -37,19 +37,23 @@ public class GameEngine {
     }
 
     public Game chooseGame() {
-        System.out.println("Game Options:");
-        System.out.println("1.     Connect Four (2 Players)");
-        System.out.println("2.     Memory (1 Player)");
-        System.out.println("3.     Logout");
-        System.out.println("4.     QUIT PROGRAM");
+        System.out.println("===================================================\n");
+        System.out.println("MAIN MENU:");
+        System.out.println("     1. GAME: Memory (1 Player)");
+        System.out.println("     2. GAME: Connect Four (2 Players)");
+        System.out.println("     3. Logout");
+        System.out.println("     4. Quit Program\n");
+
         int chosenGame = parseGameInput(1,4);
 
         switch (chosenGame) {
             case 1:
-                setGame(new ConnectFour());
+                System.out.println("\n===================================================\n");
+                setGame(new Memory());
                 break;
             case 2:
-                setGame(new Memory());
+                System.out.println("\n===================================================\n");
+                setGame(new ConnectFour());
                 break;
             case 3:
                 return null;
@@ -66,7 +70,9 @@ public class GameEngine {
     }
 
     public void quitProgram() {
-        System.out.print("Goodbye!");
+        System.out.println("\n===================================================");
+        System.out.println("\nGoodbye!\n");
+        System.out.println("Program shutting down...!\n");
         this.getScanner().close();
         System.exit(0);
     }

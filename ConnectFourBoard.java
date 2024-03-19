@@ -102,10 +102,11 @@ public class ConnectFourBoard extends Board {
         List<Tile> matchedTiles = new ArrayList<>();
         for (Matchable IMatch: super.getMatches()) {
             List<Tile> foundMatches = IMatch.match(super.getGameBoard());
-            matchedTiles.addAll(foundMatches);
+            if (foundMatches != null) {
+                matchedTiles.addAll(foundMatches);
+            }
         }
 
-        // return all matchedTiles
         return (!matchedTiles.isEmpty()) ? matchedTiles : null;
     }
 

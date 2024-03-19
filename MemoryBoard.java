@@ -43,7 +43,7 @@ public class MemoryBoard extends Board {
         // move = <ROW> <COLUMN>
         String[] parts = move.split(" ");
         int row = Integer.parseInt(parts[0])-1;
-        int col = Integer.parseInt(parts[0])-1;
+        int col = Integer.parseInt(parts[1])-1;
 
         // return false if tile has "disappeared" or if tile has been "matched" already
         // return true if match has not been found yet
@@ -108,11 +108,13 @@ public class MemoryBoard extends Board {
 
     @Override
     public List<Tile> checkMatches() {
-        // find any and all matches (horizontal, vertical, diagonal, or a mix)
+        // find any and all matches (same match)
         List<Tile> matchedTiles = new ArrayList<>();
         for (Matchable IMatch: super.getMatches()) {
             List<Tile> foundMatches = IMatch.match(super.getGameBoard());
-            matchedTiles.addAll(foundMatches);
+            if (foundMatches != null) {
+                matchedTiles.addAll(foundMatches);
+            }
         }
 
         // return all matchedTiles
@@ -140,7 +142,7 @@ public class MemoryBoard extends Board {
         List<List<Tile>> gameBoard = super.getGameBoard();
         for (List<Tile> row : gameBoard) {
             for (Tile tile : row) {
-                if (!(tile.getDisplay().equals("X"))) {
+                if (tile.getDisplay() == null || !(tile.getDisplay().equals("X"))) {
                     return false;
                 }
             }

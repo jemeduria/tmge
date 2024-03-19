@@ -44,11 +44,19 @@ public class Memory extends Game implements Endable {
 
     @Override
     public void gameLoop(Scanner scanner) {
-        System.out.println("You have 3 lives.");
-        System.out.println("You loose a life if you mis-match two tiles.");
+        System.out.println("MEMORY RULES");
+        System.out.println("     1. Match the numbers 0-9.");
+        System.out.println("     2. You have 3 lives.");
+        System.out.println("     3. You loose a life if you mis-match two tiles.");
+        System.out.println("     4. You loose a life if you mis-match two tiles.\n");
+
+        this.showAllValues();
+        super.display();
+        System.out.println("MEMORIZE THE BOARD\n");
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
+            this.hideAllValues();
             super.display();
             // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
@@ -95,8 +103,11 @@ public class Memory extends Game implements Endable {
 
     @Override
     public void takeTurn(Scanner scanner) {
-        // announce turn
-        System.out.println("    Enter two Tiles to check match.");
+        // announce scores
+        for (Player player : super.getPlayers()) {
+            int livesLeft = 3-player.getScore();
+            System.out.println("LIVES LEFT: " + livesLeft + "\n");
+        }
 
         // get moves from user + check validity
         String move = this.getMove(scanner);
@@ -109,7 +120,7 @@ public class Memory extends Game implements Endable {
         this.checkMatch();
 
         // hide all tiles that are not "X" for next turn
-        this.hideMatchedTiles();
+        this.hideAllValues();
 
     }
 
@@ -127,9 +138,9 @@ public class Memory extends Game implements Endable {
                 String tile;
                 do {
                     if (tile1 == null) {
-                        System.out.println("Choose your FIRST tile.");
+                        System.out.println("***** Choose your FIRST tile.");
                     } else {
-                        System.out.println("Choose your SECOND tile.");
+                        System.out.println("***** Choose your SECOND tile.");
                     }
                     // tile = <ROW> <COLUMN>
                     tile = this.choose(scanner);
@@ -180,9 +191,9 @@ public class Memory extends Game implements Endable {
             // parse choices into moves
             for (String chosenTile : chosenTiles) {
                 // chosenTile = "<tile1ROW> <tile2COLUMN>
-                String[] parts = move.split(" ");
+                String[] parts = chosenTile.split(" ");
                 int row = Integer.parseInt(parts[0])-1;
-                int col = Integer.parseInt(parts[0])-1;
+                int col = Integer.parseInt(parts[1])-1;
                 moves.add(board.getGameBoard().get(row).get(col));
             }
 
@@ -198,8 +209,10 @@ public class Memory extends Game implements Endable {
             List<Tile> matches = board.checkMatches();
             if (matches != null) {
                 // make the Tiles disappear
+                System.out.println("Found a match.");
                 board.removeMatchedTiles(matches);
             } else {
+                System.out.println("NOT A MATCH");
                 this.addPlayerPoint(null);
             }
         }
@@ -219,6 +232,13 @@ public class Memory extends Game implements Endable {
             boolean noLivesLeft = checkPlayerScore();
             boolean allMatched = board.isFull();
 
+            if (allMatched) {
+                System.out.println("SUCCESS! You matched all tiles.");
+            }
+            if (noLivesLeft) {
+                System.out.println("No lives left.");
+            }
+
             return (noLivesLeft || allMatched);
 
         }
@@ -234,16 +254,17 @@ public class Memory extends Game implements Endable {
 
     @Override
     public void end() {
-        System.out.println("GAME OVER");
+        System.out.println("\n===================================================\n");
+        System.out.println("MEMORY: GAME OVER\n");
     }
 
-    private void hideMatchedTiles() {
+    private void hideAllValues() {
         MemoryBoard board = this.getMemoryBoard();
         if (!(board == null)) {
 
             for (List<Tile> row : board.getGameBoard()) {
                 for (Tile tile : row) {
-                    if (!tile.getDisplay().equals("X")) {
+                    if (tile.getDisplay() != null && !tile.getDisplay().equals("X")) {
                         if (tile instanceof MemoryTile memTile) {
                             memTile.hideValue();
                         }
@@ -253,6 +274,21 @@ public class Memory extends Game implements Endable {
 
         }
 
+    }
+
+    private void showAllValues() {
+        MemoryBoard board = this.getMemoryBoard();
+        if (!(board == null)) {
+
+            for (List<Tile> row : board.getGameBoard()) {
+                for (Tile tile : row) {
+                    if (tile instanceof MemoryTile memTile) {
+                        memTile.showValue();
+                    }
+                }
+            }
+
+        }
     }
 
 }

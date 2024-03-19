@@ -53,6 +53,7 @@ public abstract class Game implements Endable {
     }
 
     public void display() {
+        System.out.println("\n===================================================\n");
         System.out.println("Rows are displayed on the LEFT side of the board (displayed vertically).");
         System.out.println("Columns are displayed on the TOP of the board (displayed horizontally).\n");
 
@@ -61,7 +62,11 @@ public abstract class Game implements Endable {
 
         System.out.print("   ");
         for (int colNum=1; colNum<=columns; colNum++) {
-            System.out.print(" " + colNum + " ");
+            if (colNum == columns) {
+                System.out.println(" " + colNum + " ");
+            } else {
+                System.out.print(" " + colNum + " ");
+            }
         }
 
         for (int rowNum=1; rowNum<=rows; rowNum++) {
@@ -69,7 +74,11 @@ public abstract class Game implements Endable {
 
             for (int colNum=1; colNum<=columns; colNum++) {
                 String display = this.getGameBoard().getGameBoard().get(rowNum-1).get(colNum-1).printDisplay();
-                System.out.println("[" + display + "]");
+                if (colNum == columns) {
+                    System.out.println("[" + display + "]");
+                } else {
+                    System.out.print("[" + display + "]");
+                }
             }
         }
 

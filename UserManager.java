@@ -26,15 +26,21 @@ public class UserManager {
 
     public void login(Scanner scanner) {
         String username = this.getUserInput(scanner, "Enter a username: ");
+
         if (!this.getUsers().contains(username)) {
             this.getUsers().add(username);
         }
         this.setCurrentUser(username);
+
+        System.out.println("Hello " + username + "!\n");
     }
 
     public void logout() {
+        System.out.println("\n===================================================\n");
+        System.out.println("Goodbye " + this.getCurrentUser() + "!");
         this.setCurrentUser(null);
         System.out.println("You have been LOGGED OUT! Enter a username to login again.");
+        System.out.println("\n===================================================\n");
     }
 
     public String getUserInput(Scanner scanner, String prompt) {
@@ -45,6 +51,7 @@ public class UserManager {
     public static void main(String[] args) {
         UserManager tmge = new UserManager(); // change later: singleton
         Scanner scanner = new Scanner(System.in); // could change this to be created within constructor of tmge
+        System.out.println();
 
         // LOOP: login, chooseGame/runGame, logout/quit
         while (true) {
