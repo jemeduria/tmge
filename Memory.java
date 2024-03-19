@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.*;
+//import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 
 public class Memory extends Game implements Endable {
-    private ExecutorService executorService;
-
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
     private final List<Integer> numOptions = new ArrayList<>();
@@ -48,58 +47,31 @@ public class Memory extends Game implements Endable {
         System.out.println("     1. Match the numbers 0-9.");
         System.out.println("     2. You have 3 lives.");
         System.out.println("     3. You loose a life if you mis-match two tiles.");
-        System.out.println("     4. You loose a life if you mis-match two tiles.\n");
+
+        try {
+            Thread.sleep(8000); // Pause for 8 seconds
+        } catch (InterruptedException e) {}
 
         this.showAllValues();
         super.display();
-        System.out.println("MEMORIZE THE BOARD\n");
+        System.out.println("MEMORIZE THE BOARD.");
+        System.out.println("You will have 20 seconds.");
+
+        try {
+            Thread.sleep(20000); // Pause for 20 seconds
+        } catch (InterruptedException e) {}
+
 
         boolean gameIsOver = false;
         while (!gameIsOver) {
             this.hideAllValues();
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             super.display();
-            // INSERT REAL-TIME ASPECT HERE
             this.takeTurn(scanner);
-            // if takeTurn() not finished running fully by 10 seconds
-            // this.addPlayerPoint(null);
             gameIsOver = isGameOver();
         }
         this.end();
     }
-
-//    @Override
-//    public void gameLoop(Scanner scanner) {
-//        System.out.println("You have 3 lives.");
-//        System.out.println("You lose a life if you mis-match two tiles.");
-//
-//        executorService = Executors.newSingleThreadExecutor();
-//
-//        boolean gameIsOver = false;
-//        while (!gameIsOver) {
-//            super.display();
-//
-//            // Start a new thread to monitor turn time
-//            Future<?> future = executorService.submit(() -> {
-//                this.takeTurn(scanner);
-//            });
-//
-//            try {
-//                // Wait for the turn to finish or timeout after 10 seconds
-//                future.get(10, TimeUnit.SECONDS);
-//            } catch (TimeoutException e) {
-//                // Turn took longer than 10 seconds
-//                System.out.println("Your turn took too long. You lose a life.");
-//                this.addPlayerPoint(null); // Assuming this method handles losing a life
-//            } catch (InterruptedException | ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//
-//            gameIsOver = isGameOver();
-//        }
-//
-//        this.end();
-//        executorService.shutdown();
-//    }
 
     @Override
     public void takeTurn(Scanner scanner) {
@@ -118,10 +90,6 @@ public class Memory extends Game implements Endable {
 
         // check for matches & update status of game
         this.checkMatch();
-
-        // hide all tiles that are not "X" for next turn
-        this.hideAllValues();
-
     }
 
     @Override
@@ -215,6 +183,11 @@ public class Memory extends Game implements Endable {
                 System.out.println("NOT A MATCH");
                 this.addPlayerPoint(null);
             }
+
+            try {
+                Thread.sleep(3000); // Pause for 3 seconds
+            } catch (InterruptedException e) {}
+
         }
     }
 

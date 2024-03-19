@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.swing.UIManager.get;
-
 public class VerticalMatch implements Matchable {
     public VerticalMatch() {}
 

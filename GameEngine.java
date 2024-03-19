@@ -1,4 +1,3 @@
-// GameEngine.java
 import java.util.Scanner;
 
 public class GameEngine {
