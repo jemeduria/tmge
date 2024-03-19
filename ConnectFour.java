@@ -64,6 +64,12 @@ public class ConnectFour extends Game implements Endable {
         while (gameRunning) {
             this.switchPlayer();
             super.display();
+
+            try {
+                // Pause for 0.5 seconds to give user the chance to look at board
+                Thread.sleep(500);
+            } catch (InterruptedException e) {}
+
             this.takeTurn(scanner);
             gameRunning = !this.isGameOver();
         }

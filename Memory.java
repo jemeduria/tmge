@@ -185,7 +185,8 @@ public class Memory extends Game implements Endable {
             }
 
             try {
-                Thread.sleep(3000); // Pause for 3 seconds
+                // Pause for 3 seconds to give user one second to check displays
+                Thread.sleep(3000);
             } catch (InterruptedException e) {}
 
         }
