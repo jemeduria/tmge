@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class ConnectFour extends Game implements Endable {
 
+    private static ConnectFour connectFourInstance = null;
     private Player playerTurn;
     private final List<String> tileOptions = new ArrayList<>();
 
-    public ConnectFour() {
+    private ConnectFour() {
         super();
 
         // initialize tile options
@@ -33,6 +34,11 @@ public class ConnectFour extends Game implements Endable {
         return tileOptions;
     }
 
+    public static synchronized ConnectFour getInstance() {
+        if (connectFourInstance == null)
+            connectFourInstance = new ConnectFour();
+        return connectFourInstance;
+    }
 
     private ConnectFourBoard getConnectFourBoard() {
         if (super.getGameBoard() instanceof ConnectFourBoard) {
@@ -217,6 +223,8 @@ public class ConnectFour extends Game implements Endable {
         }
         System.out.println("PLAYER " + winner.get(0).getID() + " WINS!");
         System.out.println("Score :" + winner.get(0).getScore() + "\n");
+
+        connectFourInstance = null;
     }
 
     private List<Player> findHighestScore() {

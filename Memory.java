@@ -5,11 +5,12 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Memory extends Game implements Endable {
+    private static Memory memoryInstance = null;
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
     private final List<Integer> numOptions = new ArrayList<>();
 
-    public Memory() {
+    private Memory() {
         super();
 
         // initialize tile options
@@ -32,6 +33,12 @@ public class Memory extends Game implements Endable {
     }
     public List<Integer> getNumOptions() {
         return numOptions;
+    }
+
+    public static synchronized Memory getInstance() {
+        if (memoryInstance == null)
+            memoryInstance = new Memory();
+        return memoryInstance;
     }
 
     private MemoryBoard getMemoryBoard() {
@@ -230,6 +237,7 @@ public class Memory extends Game implements Endable {
     public void end() {
         System.out.println("\n===================================================\n");
         System.out.println("MEMORY: GAME OVER\n");
+        memoryInstance = null;
     }
 
     private void hideAllValues() {

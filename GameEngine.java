@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class GameEngine {
-    private Scanner scanner;
+    private final Scanner scanner;
     private String user;
     private Game game;
 
@@ -43,29 +43,36 @@ public class GameEngine {
         System.out.println("     3. Logout");
         System.out.println("     4. Quit Program\n");
 
-        int chosenGame = parseGameInput(1,4);
+        int chosenGame = this.parseGameInput(1,4);
 
         switch (chosenGame) {
-            case 1:
-                System.out.println("\n===================================================\n");
-                setGame(new Memory());
-                break;
-            case 2:
-                System.out.println("\n===================================================\n");
-                setGame(new ConnectFour());
-                break;
             case 3:
                 return null;
-            default:
-                quitProgram();
+            case 4:
+                this.quitProgram();
                 return null; // if correct, should never run
+            default:
+                System.out.println("\n===================================================\n");
+                this.getGameInstance(chosenGame);
         }
 
-        return getGame();
+        return this.getGame();
+    }
+
+    private void getGameInstance(int gameNum) {
+        if (this.getGame() != null) {
+            this.setGame(null);
+        }
+        switch (gameNum) {
+            case 1:
+                this.setGame(Memory.getInstance());
+            case 2:
+                this.setGame(ConnectFour.getInstance());
+        }
     }
 
     public void runGame() {
-        getGame().gameLoop(this.getScanner());
+        this.getGame().gameLoop(this.getScanner());
     }
 
     public void quitProgram() {
@@ -76,27 +83,9 @@ public class GameEngine {
         System.exit(0);
     }
 
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
+    public Scanner getScanner() { return scanner; }
+    public String getUser() { return user; }
+    public void setUser(String user) { this.user = user; }
+    public Game getGame() { return game; }
+    public void setGame(Game game) { this.game = game; }
 }
