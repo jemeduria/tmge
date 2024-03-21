@@ -30,25 +30,28 @@ public class HorizontalMatch implements Matchable {
                 Tile currentTile = gameBoard.get(row).get(col);
                 String currentDisplay = currentTile.getDisplay();
 
-                // if not null, check for matches
                 if (currentDisplay != null) {
-                    if (matched.isEmpty()) {
-                        // is the first non-empty Tile found in row
-                        // just add to matched to find possible matches
-                        matched.add(currentTile);
+                    // if not null: check for matches
 
-                    } else if (currentDisplay.equals(matched.get(0).getDisplay())) {
-                        // matched has at least one Tile in it
-                        // add if the displays are the same
+                    if ((matched.isEmpty()) || (currentDisplay.equals(matched.get(0).getDisplay()))) {
+                        // is the first non-empty Tile found? add
+                        // is a match? add
                         matched.add(currentTile);
 
                     } else if (matched.size() <= 3) {
-                        // currentDisplay does not have the same displays in matched
-                        // AND there is less than 4 Tiles in the matched
-                        // THEREFORE reset matched to find another match
+                        // not a match AND there are less than 4 Tiles in the matched? reset
                         matched.clear();
                         matched.add(currentTile);
                     }
+
+                } else {
+                    // if null: ignore the tile and/or clear the matches
+
+                    if ((!matched.isEmpty()) && (matched.size() <= 3)) {
+                        // there is a null tile between non-null tiles? clear
+                        matched.clear();
+                    }
+
                 }
             }
         }
@@ -59,4 +62,5 @@ public class HorizontalMatch implements Matchable {
         }
         return null;
     }
+
 }
