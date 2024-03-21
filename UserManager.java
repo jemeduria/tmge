@@ -3,28 +3,34 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserManager {
-    private final List<String> users;
-    private String currentUser;
+    // ATTRIBUTES
+    private static UserManager userManagerInstance = null;
+    private final Scanner scanner = new Scanner(System.in);
+    private final List<String> users = new ArrayList<>();
+    private String currentUser = null;
 
-    public UserManager() {
-        this.users = new ArrayList<>();
-        this.currentUser = null;
+    // CONSTRUCTOR + SINGLETON PROVIDER
+    private UserManager() {}
+    public static synchronized UserManager getInstance() {
+        if (userManagerInstance == null)
+            userManagerInstance = new UserManager();
+        return userManagerInstance;
     }
 
+    // GETTERS AND SETTERS
+    public Scanner getScanner() { return this.scanner; }
+    public List<String> getUsers() {
+        return this.users;
+    }
     public String getCurrentUser() {
         return this.currentUser;
     }
-
     public void setCurrentUser(String username) {
         this.currentUser = username;
     }
 
-    public List<String> getUsers() {
-        return this.users;
-    }
-
-
-    public void login(Scanner scanner) {
+    // OPERATIONS
+    private void login(Scanner scanner) {
         String username = this.getUserInput(scanner, "Enter a username: ");
 
         if (!this.getUsers().contains(username)) {
@@ -35,7 +41,7 @@ public class UserManager {
         System.out.println("Hello " + username + "!\n");
     }
 
-    public void logout() {
+    private void logout() {
         System.out.println("\n===================================================\n");
         System.out.println("Goodbye " + this.getCurrentUser() + "!");
         this.setCurrentUser(null);
@@ -43,45 +49,37 @@ public class UserManager {
         System.out.println("\n===================================================\n");
     }
 
-    public String getUserInput(Scanner scanner, String prompt) {
+    // HELPER METHOD
+    private String getUserInput(Scanner scanner, String prompt) {
         System.out.print(">> " + prompt);
         return scanner.nextLine();
     }
 
+    // MAIN
     public static void main(String[] args) {
-        UserManager tmge = new UserManager(); // change later: singleton
-        Scanner scanner = new Scanner(System.in); // could change this to be created within constructor of tmge
+        UserManager tmge = getInstance();
         System.out.println();
 
-        // LOOP: login, chooseGame/runGame, logout/quit
         while (true) {
-            // login (also creates an account if not already made)
-            tmge.login(scanner);
+            tmge.login(tmge.getScanner());
 
-            // double check that user is logged in, otherwise retry login()
             if (tmge.getCurrentUser() != null) {
                 boolean isLoggedIn = true;
 
-                // new GameEngine with every login
-                GameEngine gameEngine = new GameEngine(tmge.getCurrentUser(), scanner);
+                GameEngine gameEngine = new GameEngine(tmge.getCurrentUser(), tmge.getScanner());
 
                 while (isLoggedIn) {
-                    // let user choose a game
                     Game game = gameEngine.chooseGame();
                     if (game != null) {
-                        // run the game
                         gameEngine.runGame();
                     } else {
-                        // user wants to log out (or quit again possibly: gameEngine.quitProgram())
                         isLoggedIn = false;
                     }
                 }
 
                 tmge.logout();
             }
-
         }
-
     }
 
 }

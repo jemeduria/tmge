@@ -1,10 +1,12 @@
 import java.util.Scanner;
 
 public class GameEngine {
+    // ATTRIBUTES
     private final Scanner scanner;
-    private String user;
+    private final String user;
     private Game game;
 
+    // CONSTRUCTOR
     public GameEngine(String user, Scanner scanner) {
         this.user = user;
         this.scanner = scanner;
@@ -15,26 +17,13 @@ public class GameEngine {
         return this.getScanner().nextLine();
     }
 
-    private int parseGameInput(int minChoices, int maxChoices) {
-        int inputNum = -1;
-        boolean isValidInput = false;
+    // GETTERS AND SETTERS
+    public Scanner getScanner() { return scanner; }
+    public String getUser() { return user; }
+    public Game getGame() { return game; }
+    public void setGame(Game game) { this.game = game; }
 
-        do {
-            String chosenGame = getUserInput("Choose an option: ");
-            try {
-                inputNum = Integer.parseInt(chosenGame);
-                isValidInput = inputNum <= maxChoices && inputNum >= minChoices;
-                if (!isValidInput) {
-                    System.out.println("ERROR: Please enter a number between " + minChoices + " and " + maxChoices + ".");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR: Invalid input. Please enter a valid number.");
-            }
-        } while (!isValidInput);
-
-        return inputNum;
-    }
-
+    // OPERATIONS
     public Game chooseGame() {
         System.out.println("===================================================\n");
         System.out.println("MAIN MENU:");
@@ -59,6 +48,19 @@ public class GameEngine {
         return this.getGame();
     }
 
+    public void runGame() {
+        this.getGame().gameLoop(this.getScanner());
+    }
+
+    public void quitProgram() {
+        System.out.println("\n===================================================");
+        System.out.println("\nGoodbye!\n");
+        System.out.println("Program shutting down...!\n");
+        this.getScanner().close();
+        System.exit(0);
+    }
+
+    // HELPER FUNCTIONS
     private void getGameInstance(int gameNum) {
         if (this.getGame() != null) {
             this.setGame(null);
@@ -73,21 +75,24 @@ public class GameEngine {
         }
     }
 
-    public void runGame() {
-        this.getGame().gameLoop(this.getScanner());
+    private int parseGameInput(int minChoices, int maxChoices) {
+        int inputNum = -1;
+        boolean isValidInput = false;
+
+        do {
+            String chosenGame = getUserInput("Choose an option: ");
+            try {
+                inputNum = Integer.parseInt(chosenGame);
+                isValidInput = inputNum <= maxChoices && inputNum >= minChoices;
+                if (!isValidInput) {
+                    System.out.println("ERROR: Please enter a number between " + minChoices + " and " + maxChoices + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: Invalid input. Please enter a valid number.");
+            }
+        } while (!isValidInput);
+
+        return inputNum;
     }
 
-    public void quitProgram() {
-        System.out.println("\n===================================================");
-        System.out.println("\nGoodbye!\n");
-        System.out.println("Program shutting down...!\n");
-        this.getScanner().close();
-        System.exit(0);
-    }
-
-    public Scanner getScanner() { return scanner; }
-    public String getUser() { return user; }
-    public void setUser(String user) { this.user = user; }
-    public Game getGame() { return game; }
-    public void setGame(Game game) { this.game = game; }
 }
