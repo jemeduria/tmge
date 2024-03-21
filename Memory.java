@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-//import java.util.concurrent.*;
-import java.util.concurrent.TimeUnit;
 
 public class Memory extends Game implements Endable {
     private static Memory memoryInstance = null;
