@@ -3,14 +3,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Game implements Endable {
-
+    // ATTRIBUTES
     private Board gameBoard;
     private final List<Player> players = new ArrayList<>();
 
-    private Tile chosenTile = null;
-
+    // CONSTRUCTOR
     public Game() {}
 
+    // GETTERS + SETTERS
     public Board getGameBoard() {
         return this.gameBoard;
     }
@@ -20,13 +20,26 @@ public abstract class Game implements Endable {
     public List<Player> getPlayers() {
         return players;
     }
-    public Tile getChosenTile() {
-        return chosenTile;
-    }
-    public void setChosenTile(Tile chosenTile) {
-        this.chosenTile = chosenTile;
+
+    // OPERATION
+    public void display() {
+        System.out.println("\n===================================================\n");
+        this.getGameBoard().displayBoard();
     }
 
+    // ABSTRACT METHODS
+    public abstract void gameLoop(Scanner scanner);
+    public abstract void takeTurn(Scanner scanner);
+    public abstract String getMove(Scanner scanner);
+    public abstract String choose(Scanner scanner);
+    public abstract void executeMove(String move);
+    public abstract void checkMatch();
+    public abstract void addPlayerPoint(List<Tile> tiles);
+    public abstract boolean isGameOver();
+    public abstract boolean checkPlayerScore();
+    public abstract void end();
+
+    // HELPER FUNCTIONS FOR ALL SUB-CLASSES
     public int parseNumber(Scanner scanner, String prompt, int minChoices, int maxChoices) {
         int inputNum = -1;
         boolean isValidInput = false;
@@ -51,54 +64,5 @@ public abstract class Game implements Endable {
         System.out.print(">> " + prompt);
         return scanner.nextLine();
     }
-
-    public void display() {
-        System.out.println("\n===================================================\n");
-        System.out.println("Rows are displayed on the LEFT side of the board (displayed vertically).");
-        System.out.println("Columns are displayed on the TOP of the board (displayed horizontally).\n");
-
-        int rows = this.getGameBoard().getGameBoard().size();
-        int columns = this.getGameBoard().getGameBoard().get(0).size();
-
-        System.out.print("   ");
-        for (int colNum=1; colNum<=columns; colNum++) {
-            if (colNum == columns) {
-                System.out.println(" " + colNum + " ");
-            } else {
-                System.out.print(" " + colNum + " ");
-            }
-        }
-
-        for (int rowNum=1; rowNum<=rows; rowNum++) {
-            System.out.print(rowNum + "  ");
-
-            for (int colNum=1; colNum<=columns; colNum++) {
-                String display = this.getGameBoard().getGameBoard().get(rowNum-1).get(colNum-1).printDisplay();
-                if (colNum == columns) {
-                    System.out.println("[" + display + "]");
-                } else {
-                    System.out.print("[" + display + "]");
-                }
-            }
-        }
-
-        System.out.println();
-
-        // System.out.println("    1  2  3  4 ");
-        // System.out.println("1  [ ][ ][ ][ ]");
-        // System.out.println("2  [ ][ ][ ][ ]");
-        // System.out.println("3  [ ][ ][ ][ ]");
-    }
-
-    public abstract void gameLoop(Scanner scanner);
-    public abstract void takeTurn(Scanner scanner);
-    public abstract String getMove(Scanner scanner);
-    public abstract String choose(Scanner scanner);
-    public abstract void executeMove(String move);
-    public abstract void checkMatch();
-    public abstract void addPlayerPoint(List<Tile> tiles);
-    public abstract boolean isGameOver();
-    public abstract boolean checkPlayerScore();
-    public abstract void end();
 
 }

@@ -12,11 +12,6 @@ public class GameEngine {
         this.scanner = scanner;
     }
 
-    private String getUserInput(String prompt) {
-        System.out.print(">> " + prompt);
-        return this.getScanner().nextLine();
-    }
-
     // GETTERS AND SETTERS
     public Scanner getScanner() { return scanner; }
     public String getUser() { return user; }
@@ -73,6 +68,11 @@ public class GameEngine {
                 this.setGame(ConnectFour.getInstance());
                 break;
         }
+    }
+
+    private String getUserInput(String prompt) {
+        System.out.print(">> " + prompt);
+        return this.getScanner().nextLine();
     }
 
     private int parseGameInput(int minChoices, int maxChoices) {

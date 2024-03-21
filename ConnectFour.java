@@ -3,11 +3,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConnectFour extends Game implements Endable {
-
+    // SINGLETON
     private static ConnectFour connectFourInstance = null;
+
+    // ATTRIBUTES
     private Player playerTurn;
     private final List<String> tileOptions = new ArrayList<>();
 
+    // CONSTRUCTOR + SINGLETON PROVIDER
     private ConnectFour() {
         super();
 
@@ -16,22 +19,12 @@ public class ConnectFour extends Game implements Endable {
         this.tileOptions.add("O");
 
         // initialize board
-        super.setGameBoard(new ConnectFourBoard(this.tileOptions));
+        super.setGameBoard(new ConnectFourBoard());
 
         // initialize players
         super.getPlayers().add(new Player(1, this.tileOptions.get(0)));
         super.getPlayers().add(new Player(2, this.tileOptions.get(1)));
         this.playerTurn =  super.getPlayers().get(1);
-    }
-
-    public Player getPlayerTurn() {
-        return playerTurn;
-    }
-    public void setPlayerTurn(Player playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-    public List<String> getTileOptions() {
-        return tileOptions;
     }
 
     public static synchronized ConnectFour getInstance() {
@@ -40,24 +33,12 @@ public class ConnectFour extends Game implements Endable {
         return connectFourInstance;
     }
 
-    private ConnectFourBoard getConnectFourBoard() {
-        if (super.getGameBoard() instanceof ConnectFourBoard) {
-            return (ConnectFourBoard) super.getGameBoard();
-        }
-        return null;
-    }
 
-    private void switchPlayer() {
-        int currentPlayerID = (this.getPlayerTurn().getID() % super.getPlayers().size()) + 1;
+    // GETTER + SETTER
+    public Player getPlayerTurn() { return playerTurn; }
+    public void setPlayerTurn(Player playerTurn) { this.playerTurn = playerTurn; }
 
-        for (Player player : super.getPlayers()) {
-            if (player.getID() == currentPlayerID) {
-                this.setPlayerTurn(player);
-                break;
-            }
-        }
-    }
-
+    // ABSTRACT METHOD IMPLEMENTATIONS
     @Override
     public void gameLoop(Scanner scanner) {
         System.out.println("CONNECT FOUR RULES");
@@ -227,6 +208,25 @@ public class ConnectFour extends Game implements Endable {
         connectFourInstance = null;
     }
 
+    // HELPER FUNCTIONS
+    private ConnectFourBoard getConnectFourBoard() {
+        if (super.getGameBoard() instanceof ConnectFourBoard) {
+            return (ConnectFourBoard) super.getGameBoard();
+        }
+        return null;
+    }
+
+    private void switchPlayer() {
+        int currentPlayerID = (this.getPlayerTurn().getID() % super.getPlayers().size()) + 1;
+
+        for (Player player : super.getPlayers()) {
+            if (player.getID() == currentPlayerID) {
+                this.setPlayerTurn(player);
+                break;
+            }
+        }
+    }
+
     private List<Player> findHighestScore() {
         List<Player> playersWithHighestScore = new ArrayList<>();
         int highestScore = 0;
@@ -243,8 +243,6 @@ public class ConnectFour extends Game implements Endable {
 
         return playersWithHighestScore;
     }
-
-
 
 }
 

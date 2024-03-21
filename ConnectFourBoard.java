@@ -2,32 +2,62 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectFourBoard extends Board {
-
+    // ATTRIBUTES
     private final int rows = 6;
     private final int columns = 7;
-    private final List<String> tileOptions;
 
-    public ConnectFourBoard(List<String> tileOptions) {
+    // CONSTRUCTOR
+    public ConnectFourBoard() {
         super();
-        this.tileOptions = tileOptions;
-        this.addMatches();
+        this.addMatchTypes();
         this.addDisappearTypes();
         this.createBoardGame(this.createBoardTiles());
     }
 
+    // GETTERS
     public int getRows() {
         return this.rows;
     }
-
     public int getColumns() {
         return this.columns;
     }
 
+    // ABSTRACT METHOD IMPLEMENTATIONS
     @Override
-    public void addMatches() {
-        super.getMatches().add(new VerticalMatch());
-        super.getMatches().add(new HorizontalMatch());
-        super.getMatches().add(new DiagonalMatch());
+    public void displayBoard() {
+        System.out.println("Rows are displayed on the LEFT side of the board (displayed vertically).");
+        System.out.println("Columns are displayed on the TOP of the board (displayed horizontally).\n");
+
+        System.out.print("   ");
+        for (int colNum=1; colNum<=columns; colNum++) {
+            if (colNum == columns) {
+                System.out.println(" " + colNum + " ");
+            } else {
+                System.out.print(" " + colNum + " ");
+            }
+        }
+
+        for (int rowNum=1; rowNum<=rows; rowNum++) {
+            System.out.print(rowNum + "  ");
+
+            for (int colNum=1; colNum<=columns; colNum++) {
+                String display = super.getGameBoard().get(rowNum-1).get(colNum-1).printDisplay();
+                if (colNum == columns) {
+                    System.out.println("[" + display + "]");
+                } else {
+                    System.out.print("[" + display + "]");
+                }
+            }
+        }
+
+        System.out.println();
+    }
+
+    @Override
+    public void addMatchTypes() {
+        super.getMatchTypes().add(new VerticalMatch());
+        super.getMatchTypes().add(new HorizontalMatch());
+        super.getMatchTypes().add(new DiagonalMatch());
     }
 
     @Override
@@ -69,7 +99,7 @@ public class ConnectFourBoard extends Board {
         // Create and add tiles to the list based on the number of rows and columns
         for (int row = 0; row < this.getRows(); row++) {
             for (int col = 0; col < this.getColumns(); col++) {
-                tiles.add(new ConnectFourTile(tileOptions, row, col));
+                tiles.add(new BasicTile(row, col));
             }
         }
 
@@ -100,7 +130,7 @@ public class ConnectFourBoard extends Board {
     public List<Tile> checkMatches() {
         // find any and all matches (horizontal, vertical, diagonal, or a mix)
         List<Tile> matchedTiles = new ArrayList<>();
-        for (Matchable IMatch: super.getMatches()) {
+        for (Matchable IMatch: super.getMatchTypes()) {
             List<Tile> foundMatches = IMatch.match(super.getGameBoard());
             if (foundMatches != null) {
                 matchedTiles.addAll(foundMatches);
@@ -129,6 +159,20 @@ public class ConnectFourBoard extends Board {
 
     }
 
+    @Override
+    public boolean isFull() {
+        List<List<Tile>> gameBoard = super.getGameBoard();
+        for (List<Tile> row : gameBoard) {
+            for (Tile tile : row) {
+                if (tile.getDisplay() == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // HELPER FUNCTIONS
     private void dropTiles(List<DisappearingTile> disappearingTiles) {
         // order Tiles by highest row (lowest row number) first
         List<DisappearingTile> orderedTiles = new ArrayList<>();
@@ -167,19 +211,5 @@ public class ConnectFourBoard extends Board {
         }
 
     }
-
-    @Override
-    public boolean isFull() {
-        List<List<Tile>> gameBoard = super.getGameBoard();
-        for (List<Tile> row : gameBoard) {
-            for (Tile tile : row) {
-                if (tile.getDisplay() == null) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
 
 }

@@ -3,34 +3,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Memory extends Game implements Endable {
+    // SINGLETON
     private static Memory memoryInstance = null;
+    // ATTRIBUTES
     private final int minNumTile = 0;
     private final int maxNumTile = 9;
-    private final List<Integer> numOptions = new ArrayList<>();
 
+    // CONSTRUCTOR + SINGLETON PROVIDER
     private Memory() {
         super();
-
-        // initialize tile options
-        for (int i=this.minNumTile; i<=this.maxNumTile; i++) {
-            this.numOptions.add(i);
-        }
-
-        // initialize board
-        super.setGameBoard(new MemoryBoard(this.numOptions));
-
-        // initialize players
+        this.initializeBoard();
         super.getPlayers().add(new Player(1, null));
-    }
-
-    public int getMinNumTile() {
-        return minNumTile;
-    }
-    public int getMaxNumTile() {
-        return maxNumTile;
-    }
-    public List<Integer> getNumOptions() {
-        return numOptions;
     }
 
     public static synchronized Memory getInstance() {
@@ -39,13 +22,15 @@ public class Memory extends Game implements Endable {
         return memoryInstance;
     }
 
-    private MemoryBoard getMemoryBoard() {
-        if (super.getGameBoard() instanceof MemoryBoard) {
-            return (MemoryBoard) super.getGameBoard();
-        }
-        return null;
+    // GETTERS
+    public int getMinNumTile() {
+        return minNumTile;
+    }
+    public int getMaxNumTile() {
+        return maxNumTile;
     }
 
+    // ABSTRACT METHOD IMPLEMENTATIONS
     @Override
     public void gameLoop(Scanner scanner) {
         System.out.println("MEMORY RULES");
@@ -147,7 +132,7 @@ public class Memory extends Game implements Endable {
 
             int tileRow = super.parseNumber(scanner, "Enter the ROW number of your choice: ", minRows, maxRows);
             int tileColumn = super.parseNumber(scanner, "Enter the COLUMN number of your choice: ", minColumns, maxColumns);
-            return String.valueOf(tileRow) + " " + String.valueOf(tileColumn);
+            return tileRow + " " + tileColumn;
         }
         return null; // MAJOR ISSUE IF THIS CODE IS REACHED
     }
@@ -238,6 +223,24 @@ public class Memory extends Game implements Endable {
         memoryInstance = null;
     }
 
+    // HELPER FUNCTIONS
+    private MemoryBoard getMemoryBoard() {
+        if (super.getGameBoard() instanceof MemoryBoard) {
+            return (MemoryBoard) super.getGameBoard();
+        }
+        return null;
+    }
+
+    private void initializeBoard() {
+        List<Integer> numOptions = new ArrayList<>();
+
+        for (int i=this.getMinNumTile(); i<=this.getMaxNumTile(); i++) {
+            numOptions.add(i);
+        }
+
+        super.setGameBoard(new MemoryBoard(numOptions));
+    }
+
     private void hideAllValues() {
         MemoryBoard board = this.getMemoryBoard();
         if (!(board == null)) {
@@ -245,7 +248,7 @@ public class Memory extends Game implements Endable {
             for (List<Tile> row : board.getGameBoard()) {
                 for (Tile tile : row) {
                     if (tile.getDisplay() != null && !tile.getDisplay().equals("X")) {
-                        if (tile instanceof MemoryTile memTile) {
+                        if (tile instanceof ValueTile memTile) {
                             memTile.hideValue();
                         }
                     }
@@ -262,7 +265,7 @@ public class Memory extends Game implements Endable {
 
             for (List<Tile> row : board.getGameBoard()) {
                 for (Tile tile : row) {
-                    if (tile instanceof MemoryTile memTile) {
+                    if (tile instanceof ValueTile memTile) {
                         memTile.showValue();
                     }
                 }

@@ -3,22 +3,35 @@ import java.util.Collections;
 import java.util.List;
 
 public class MemoryBoard extends Board {
-
+    // ATTRIBUTES
     private final int rows = 5;
     private final int columns = 4;
-
     private final List<Integer> numOptions;
 
+    // CONSTRUCTOR
     public MemoryBoard(List<Integer> numOptions) {
         super();
         this.numOptions = numOptions;
-        this.addMatches();
+        this.addMatchTypes();
         this.addDisappearTypes();
         this.createBoardGame(this.createBoardTiles());
     }
+
+    // GETTERS
+    public int getRows() {
+        return this.rows;
+    }
+    public int getColumns() {
+        return this.columns;
+    }
+    public List<Integer> getNumOptions() {
+        return numOptions;
+    }
+
+    // ABSTRACT METHOD IMPLEMENTATIONS
     @Override
-    public void addMatches() {
-        super.getMatches().add(new SameTileMatch());
+    public void addMatchTypes() {
+        super.getMatchTypes().add(new SameTileMatch());
     }
 
     @Override
@@ -26,40 +39,34 @@ public class MemoryBoard extends Board {
         super.getDisappearTypes().add(new SimpleDisappear());
     }
 
-    public int getRows() {
-        return this.rows;
-    }
-
-    public int getColumns() {
-        return this.columns;
-    }
-
-    public List<Integer> getNumOptions() {
-        return numOptions;
-    }
-
     @Override
-    public boolean isValidMove(String move) {
-        // move = <ROW> <COLUMN>
-        String[] parts = move.split(" ");
-        int row = Integer.parseInt(parts[0])-1;
-        int col = Integer.parseInt(parts[1])-1;
+    public void displayBoard() {
+        System.out.println("Rows are displayed on the LEFT side of the board (displayed vertically).");
+        System.out.println("Columns are displayed on the TOP of the board (displayed horizontally).\n");
 
-        // return false if tile has "disappeared" or if tile has been "matched" already
-        // return true if match has not been found yet
-        return super.getGameBoard().get(row).get(col).getDisplay() == null;
-
-    }
-
-    @Override
-    public void execute(List<Tile> tiles, Player player) {
-        for (Tile tile: tiles) {
-            if (tile instanceof MemoryTile memTile) {
-                memTile.showValue();
+        System.out.print("   ");
+        for (int colNum=1; colNum<=columns; colNum++) {
+            if (colNum == columns) {
+                System.out.println(" " + colNum + " ");
+            } else {
+                System.out.print(" " + colNum + " ");
             }
         }
-        super.display();
 
+        for (int rowNum=1; rowNum<=rows; rowNum++) {
+            System.out.print(rowNum + "  ");
+
+            for (int colNum=1; colNum<=columns; colNum++) {
+                String display = super.getGameBoard().get(rowNum-1).get(colNum-1).printDisplay();
+                if (colNum == columns) {
+                    System.out.println("[" + display + "]");
+                } else {
+                    System.out.print("[" + display + "]");
+                }
+            }
+        }
+
+        System.out.println();
     }
 
     @Override
@@ -67,9 +74,9 @@ public class MemoryBoard extends Board {
         // main list to get create Memory Tiles
         List<Tile> memoryTiles = new ArrayList<>();
 
-        // double the amount of the each number (for matching)
-        List<Integer> allMemoryValues = new ArrayList<>(numOptions);
-        allMemoryValues.addAll(numOptions);
+        // double the amount of each number (for matching)
+        List<Integer> allMemoryValues = new ArrayList<>(this.getNumOptions());
+        allMemoryValues.addAll(this.getNumOptions());
 
         // shuffle all values
         Collections.shuffle(allMemoryValues);
@@ -79,7 +86,7 @@ public class MemoryBoard extends Board {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Integer value = allMemoryValues.get(valIndex % allMemoryValues.size());
-                memoryTiles.add(new MemoryTile(numOptions, i, j, value));
+                memoryTiles.add(new ValueTile(i, j, value));
                 valIndex++;
             }
         }
@@ -107,10 +114,32 @@ public class MemoryBoard extends Board {
     }
 
     @Override
+    public boolean isValidMove(String move) {
+        // move = <ROW> <COLUMN>
+        String[] parts = move.split(" ");
+        int row = Integer.parseInt(parts[0])-1;
+        int col = Integer.parseInt(parts[1])-1;
+
+        // return false if tile has "disappeared" or if tile has been "matched" already
+        // return true if match has not been found yet
+        return super.getGameBoard().get(row).get(col).getDisplay() == null;
+
+    }
+
+    @Override
+    public void execute(List<Tile> tiles, Player player) {
+        for (Tile tile: tiles) {
+            if (tile instanceof ValueTile memTile) {
+                memTile.showValue();
+            }
+        }
+    }
+
+    @Override
     public List<Tile> checkMatches() {
         // find any and all matches (same match)
         List<Tile> matchedTiles = new ArrayList<>();
-        for (Matchable IMatch: super.getMatches()) {
+        for (Matchable IMatch: super.getMatchTypes()) {
             List<Tile> foundMatches = IMatch.match(super.getGameBoard());
             if (foundMatches != null) {
                 matchedTiles.addAll(foundMatches);

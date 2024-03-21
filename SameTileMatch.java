@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SameTileMatch implements Matchable {
-
+    // CONSTRUCTOR
     public SameTileMatch() {}
 
+    // INTERFACE IMPLEMENTATION
     public List<Tile> match(List<List<Tile>> gameBoard) {
         String toBeMatched = null;
         List<Tile> matched = new ArrayList<>();

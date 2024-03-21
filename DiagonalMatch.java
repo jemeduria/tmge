@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiagonalMatch implements Matchable {
-    public DiagonalMatch() {
-        ;
-    }
+	// CONSTRUCTOR
+    public DiagonalMatch() {}
 
+	// INTERFACE IMPLEMENTATION
 	public List<Tile> match(List<List<Tile>> gameBoard) {
 		int rows = gameBoard.size();
 		int columns = gameBoard.get(0).size();

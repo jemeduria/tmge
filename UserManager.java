@@ -3,8 +3,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserManager {
-    // ATTRIBUTES
+    // SINGLETON
     private static UserManager userManagerInstance = null;
+
+    // ATTRIBUTES
     private final Scanner scanner = new Scanner(System.in);
     private final List<String> users = new ArrayList<>();
     private String currentUser = null;
