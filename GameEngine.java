@@ -66,8 +66,10 @@ public class GameEngine {
         switch (gameNum) {
             case 1:
                 this.setGame(Memory.getInstance());
+                break;
             case 2:
                 this.setGame(ConnectFour.getInstance());
+                break;
         }
     }
 
