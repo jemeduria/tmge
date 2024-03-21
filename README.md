@@ -10,8 +10,12 @@
 ### Game Instructions
 - to run program through in commandline:
   - once in the tmge directory:
-    - cd out/artifacts/tmge_jar
-    - java -jar tmge.jar
+    - "cd out/artifacts/tmge_jar"
+    - "java -jar tmge.jar"
+  - for non-traditional running:
+    - compile all .java files
+    - "java UserManager"
+
 ##### Memory:
 - Enter a username.
 - Choose Memory by typing “1”.
