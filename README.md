@@ -8,7 +8,10 @@
 - Doyeon Yun ( govlehdus )
 
 ### Game Instructions
-- to run, in commandline: "java -jar UserManager"
+- to run program through in commandline:
+  - once in the tmge directory:
+    - cd out/artifacts/tmge_jar
+    - java -jar tmge.jar
 ##### Memory:
 - Enter a username.
 - Choose Memory by typing “1”.
