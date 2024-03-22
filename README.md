@@ -9,8 +9,7 @@
 
 ### Game Instructions
 - to run program through in commandline:
-  - once in the tmge directory:
-    - "cd out/artifacts/tmge_jar"
+  - in the GitHub repo navigate to the out/artifacts/tmge_jar directory:
     - "java -jar tmge.jar"
   - for non-traditional running:
     - compile all .java files
