@@ -11,7 +11,7 @@
 - to run program through in commandline:
   - in the GitHub repo navigate to the out/artifacts/tmge_jar directory:
     - "java -jar tmge.jar"
-  - for non-traditional running:
+  - running from a non-jar file:
     - compile all .java files
     - "java UserManager"
 
